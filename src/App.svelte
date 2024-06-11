@@ -1,16 +1,16 @@
 <script>
+  import { Specie } from "./components/Specie";
   import Scroller from "@sveltejs/svelte-scroller";
   import { onMount } from "svelte";
   import * as d3 from "d3";
 
   import Characters from "./components/CharacterProfile.svelte";
-  import DebugScroller from "./components/DebugScroller.svelte";
 
   /* Variables para la data del medallero */
-  let deportistas = [];
-  let filteredDeportistas = [];
+  let species = [];
+  let selectedSpecie;
 
-  /* Variables para el scroller1 */
+  /* Variables para el scroller*/
   let count;
   let index;
   let offset;
@@ -19,53 +19,60 @@
   let threshold = 0.5;
   let bottom = 0.9;
 
-  /* Variables para el scroller 2 */
-  let count2;
-  let index2;
-  let offset2;
-  let progress2;
-  let top2 = 0.1;
-  let threshold2 = 0.5;
-  let bottom2 = 0.9;
-
-  /* Charts */
-  let charts = {
-    0: "lines_01.png",
-    1: "lines_02.png",
-    2: "lines_03.png",
-  };
-
   onMount(() => {
-    d3.csv("./data/deportistas.csv", d3.autoType).then((data) => {
-      deportistas = data;
-      filteredDeportistas = deportistas;
+    d3.csv("./data/evolution_average.csv", d3.autoType).then((data) => {
+      const speciesList = [];
+
+      // Map the data to instances of the Specie class
+      data.forEach((d, i) => {
+        const specie = new Specie(
+          i,
+          d.Genus_and_Specie,
+          d.Time,
+          d.Location,
+          d.Current_Country,
+          d.Cranial_Capacity,
+          d.Height,
+          d.Incisor_Size,
+          d.Prognathism,
+          d.Foramen_Mágnum_Position,
+          d.Canine_Size,
+          d.Canines_Shape,
+          d.Tooth_Enamel,
+          d.Tecno,
+          d.Tecno_type,
+          d.Diet,
+          d.Hip
+        );
+        speciesList.push(specie);
+      });
+
+      // Now speciesList contains a list of Specie objects
+      console.log(speciesList);
+      species = speciesList;
+      selectedSpecie = species[0];
+      console.log(selectedSpecie);
     });
   });
 
   $: {
     // Es un observer que se ejecuta cuando cambia el valor de index
-    switch (index) {
-      case 0:
-        filteredDeportistas = deportistas;
-        break;
-      case 1:
-        filteredDeportistas = deportistas.filter((d) => d.genero === "F");
-        break;
-      case 2:
-        filteredDeportistas = deportistas.filter((d) => d.genero === "M");
-        break;
-      case 3:
-        filteredDeportistas = deportistas.filter(
-          (d) => d.continente === "América"
-        );
-        break;
-      default:
-        filteredDeportistas = deportistas;
-    }
-    console.log(filteredDeportistas);
+    selectedSpecie = species[index];
+    console.log(selectedSpecie);
   }
 
+  
+
   function startGame(event) {
+    event.preventDefault();
+    const anchor = document.getElementById("game-anchor");
+    window.scrollTo({
+      top: anchor.offsetTop,
+      behavior: "smooth",
+    });
+  }
+
+  function exploreCharacters(event) {
     event.preventDefault();
     const anchor = document.getElementById("start-anchor");
     window.scrollTo({
@@ -80,10 +87,14 @@
     <img
       src="images/evolution.gif"
       alt="Evolution Gif"
-      style="width: 40vw; height: auto; top: 100px;"
+      style="width: 40vw; height: auto; margin-top: 10%;"
     />
     <h1 style="text-align: center; width:100vw;">Evolution: The Game</h1>
-    <button on:click={startGame}>Explore Characters</button>
+    <div class="row" style="margin-top: 5px;">
+      <button on:click={exploreCharacters}>Explore Characters</button>
+      <button on:click={startGame}>Play Game</button>
+    </div>
+   
   </div>
 
   <!-- {#if progress < 1}
@@ -93,7 +104,7 @@
     offset={offset}
     progress={progress}
   />
-  {/if} -->
+  {/if}  -->
   <!-- Primer scroller -->
 
   <div id="start-anchor"></div>
@@ -107,32 +118,55 @@
     bind:progress
   >
     <div slot="background">
-      <Characters></Characters>
+      <Characters {progress} specie={selectedSpecie}></Characters>
     </div>
     <div slot="foreground" class="foreground_container">
       <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Choose your Character</h3>
-        </div>
+        <div class="epi_foreground"></div>
+        <div style="height: 100vh;"></div>
       </section>
       <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Choose your Character</h3>
-        </div>
+        <div class="epi_foreground"></div>
+        <div style="height: 100vh;"></div>
       </section>
       <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Choose your Character</h3>
-        </div>
+        <div class="epi_foreground"></div>
+        <div style="height: 100vh;"></div>
       </section>
       <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Choose your Character</h3>
-        </div>
+        <div class="epi_foreground"></div>
+        <div style="height: 100vh;"></div>
       </section>
-    </div>
-  </Scroller>
-
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+        <div style="height: 100vh;"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+        <div style="height: 100vh;"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+        <div style="height: 100vh;"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+        <div style="height: 100vh;"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+        <div style="height: 100vh;"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+        <div style="height: 100vh;"></div>
+      </section>
+    </div></Scroller
+  >
+  <div id="game-anchor"></div>
   <div class="landing column">
     <img
       src="images/evolution.gif"
@@ -182,9 +216,7 @@
 <style>
   .landing {
     height: 100vh;
-    align-items: center;
     display: flex;
-    justify-content: center;
   }
 
   /* Estilos para el scroller */
@@ -206,5 +238,4 @@
     padding: 20px;
     max-width: 150px;
   }
-
 </style>
