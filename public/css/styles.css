@@ -37,6 +37,17 @@ h1 {
   gap: 10px;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around; /* Distribute items evenly */
+  gap: 10px; /* Space between items */
+  padding: 10px; /* Optional: padding for the row */
+  border-radius: 8px; /* Optional: rounded corners */
+
+}
+
 .card {
   padding: 2em;
 }

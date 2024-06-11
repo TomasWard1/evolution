@@ -3,9 +3,8 @@
   import { onMount } from "svelte";
   import * as d3 from "d3";
 
-  import Medallero from "./components/Medallero.svelte";
+  import Characters from "./components/CharacterProfile.svelte";
   import DebugScroller from "./components/DebugScroller.svelte";
-  import Loremipsum from "./components/Loremipsum.svelte";
 
   /* Variables para la data del medallero */
   let deportistas = [];
@@ -78,8 +77,13 @@
 
 <main>
   <div class="landing column">
+    <img
+      src="images/evolution.gif"
+      alt="Evolution Gif"
+      style="width: 40vw; height: auto; top: 100px;"
+    />
     <h1 style="text-align: center; width:100vw;">Evolution: The Game</h1>
-    <button on:click={startGame}>Start</button>
+    <button on:click={startGame}>Explore Characters</button>
   </div>
 
   <!-- {#if progress < 1}
@@ -91,6 +95,7 @@
   />
   {/if} -->
   <!-- Primer scroller -->
+
   <div id="start-anchor"></div>
   <Scroller
     {top}
@@ -102,36 +107,41 @@
     bind:progress
   >
     <div slot="background">
-      <Medallero deportistas={filteredDeportistas} />
+      <Characters></Characters>
     </div>
     <div slot="foreground" class="foreground_container">
       <section class="step_foreground">
         <div class="epi_foreground">
-          <h3>Seccion {index + 1}</h3>
-          <p>Todos los deportistas</p>
+          <h3>Choose your Character</h3>
         </div>
       </section>
       <section class="step_foreground">
         <div class="epi_foreground">
-          <h3>Seccion {index + 1}</h3>
-          <p>Deportistas femeninas</p>
+          <h3>Choose your Character</h3>
         </div>
       </section>
       <section class="step_foreground">
         <div class="epi_foreground">
-          <h3>Seccion {index + 1}</h3>
-          <p>Deportistas masculinos</p>
+          <h3>Choose your Character</h3>
         </div>
       </section>
       <section class="step_foreground">
         <div class="epi_foreground">
-          <h3>Seccion {index + 1}</h3>
-          <p>Deportistas americanos</p>
+          <h3>Choose your Character</h3>
         </div>
       </section>
     </div>
   </Scroller>
 
+  <div class="landing column">
+    <img
+      src="images/evolution.gif"
+      alt="Evolution Gif"
+      style="width: 40vw; height: auto; top: 100px;"
+    />
+    <h1 style="text-align: center; width:100vw;">Choose</h1>
+    <button on:click={startGame}>Play</button>
+  </div>
   <!-- Segundo scroller -->
   <!-- <Scroller
     top={top2}
@@ -180,7 +190,7 @@
   /* Estilos para el scroller */
   .foreground_container {
     pointer-events: none;
-    padding-left: 50%;
+    padding-left: 85%;
   }
 
   .step_foreground {
@@ -188,7 +198,6 @@
     justify-content: end;
     align-items: center;
     height: 100vh;
-    border: 1px solid rgba(0, 0, 0, 0.4);
     color: white;
     padding: 1em;
     margin: 0 0 2em 0;
@@ -196,16 +205,6 @@
   .epi_foreground {
     padding: 20px;
     max-width: 150px;
-    background-color: rgba(0, 0, 0, 0.5);
   }
-  .lorem_ipsum {
-    margin: 100px auto;
-    max-width: 740px;
-  }
-  .image_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+
 </style>
