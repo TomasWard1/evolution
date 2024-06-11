@@ -1,102 +1,105 @@
 <script>
-  import Scroller from "@sveltejs/svelte-scroller"
-  import {onMount} from "svelte"
-  import * as d3 from "d3"
+  import Scroller from "@sveltejs/svelte-scroller";
+  import { onMount } from "svelte";
+  import * as d3 from "d3";
 
-  import Medallero from "./components/Medallero.svelte"
-  import DebugScroller from "./components/DebugScroller.svelte"
-  import Loremipsum from "./components/Loremipsum.svelte"
+  import Medallero from "./components/Medallero.svelte";
+  import DebugScroller from "./components/DebugScroller.svelte";
+  import Loremipsum from "./components/Loremipsum.svelte";
 
   /* Variables para la data del medallero */
-  let deportistas = []
-  let filteredDeportistas = []
+  let deportistas = [];
+  let filteredDeportistas = [];
 
   /* Variables para el scroller1 */
-  let count
-  let index
-  let offset
-  let progress
-  let top = 0.1
-  let threshold = 0.5
-  let bottom = 0.9
+  let count;
+  let index;
+  let offset;
+  let progress;
+  let top = 0.1;
+  let threshold = 0.5;
+  let bottom = 0.9;
 
   /* Variables para el scroller 2 */
-  let count2
-  let index2
-  let offset2
-  let progress2
-  let top2 = 0.1
-  let threshold2 = 0.5
-  let bottom2 = 0.9
+  let count2;
+  let index2;
+  let offset2;
+  let progress2;
+  let top2 = 0.1;
+  let threshold2 = 0.5;
+  let bottom2 = 0.9;
 
   /* Charts */
   let charts = {
     0: "lines_01.png",
     1: "lines_02.png",
     2: "lines_03.png",
-  }
+  };
 
   onMount(() => {
-    d3.csv("./data/deportistas.csv", d3.autoType).then(data => {
-      deportistas = data
-      filteredDeportistas = deportistas
-    })
-  })
+    d3.csv("./data/deportistas.csv", d3.autoType).then((data) => {
+      deportistas = data;
+      filteredDeportistas = deportistas;
+    });
+  });
 
   $: {
     // Es un observer que se ejecuta cuando cambia el valor de index
     switch (index) {
       case 0:
-        filteredDeportistas = deportistas
-        break
+        filteredDeportistas = deportistas;
+        break;
       case 1:
-        filteredDeportistas = deportistas.filter(d => d.genero === "F")
-        break
+        filteredDeportistas = deportistas.filter((d) => d.genero === "F");
+        break;
       case 2:
-        filteredDeportistas = deportistas.filter(d => d.genero === "M")
-        break
+        filteredDeportistas = deportistas.filter((d) => d.genero === "M");
+        break;
       case 3:
         filteredDeportistas = deportistas.filter(
-          d => d.continente === "América",
-        )
-        break
+          (d) => d.continente === "América"
+        );
+        break;
       default:
-        filteredDeportistas = deportistas
+        filteredDeportistas = deportistas;
     }
-    console.log(filteredDeportistas)
+    console.log(filteredDeportistas);
+  }
+
+  function startGame(event) {
+    event.preventDefault();
+    const anchor = document.getElementById("start-anchor");
+    window.scrollTo({
+      top: anchor.offsetTop,
+      behavior: "smooth",
+    });
   }
 </script>
 
 <main>
-  <div class="header">
-    <img src="/images/olympics-logo.png" width="100" alt="anillos" />
-    <h3 class="headline">
-      <b>Triunfos Olímpicos</b>
-      Medallas, alturas y continentes
-    </h3>
-    <p class="bajada">Explorando los logros olímpicos a través de datos</p>
-    <div class="lorem_ipsum">
-      <Loremipsum />
-    </div>
+  <div class="landing column">
+    <h1 style="text-align: center; width:100vw;">Evolution: The Game</h1>
+    <button on:click={startGame}>Start</button>
   </div>
 
-  {#if progress < 1}
+  <!-- {#if progress < 1}
   <DebugScroller
     index={index}
     count={count}
     offset={offset}
     progress={progress}
   />
-  {/if}
+  {/if} -->
   <!-- Primer scroller -->
+  <div id="start-anchor"></div>
   <Scroller
-    top={top}
-    threshold={threshold}
-    bottom={bottom}
-    bind:count={count}
-    bind:index={index}
-    bind:offset={offset}
-    bind:progress={progress}
+    {top}
+    {threshold}
+    {bottom}
+    bind:count
+    bind:index
+    bind:offset
+    bind:progress
   >
     <div slot="background">
       <Medallero deportistas={filteredDeportistas} />
@@ -129,13 +132,8 @@
     </div>
   </Scroller>
 
-  <div class="lorem_ipsum">
-    <Loremipsum />
-  </div>
-  
-
   <!-- Segundo scroller -->
-  <Scroller
+  <!-- <Scroller
     top={top2}
     threshold={threshold2}
     bottom={bottom2}
@@ -168,38 +166,15 @@
         </div>
       </section>
     </div>
-  </Scroller>
+  </Scroller> -->
 </main>
 
-<div class="lorem_ipsum">
-  <Loremipsum />
-</div>
-
 <style>
-
-  .header {
+  .landing {
+    height: 100vh;
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 50px;
-    margin-bottom: 80px;
-  }
-  .headline {
-    font-size: 30px;
-    line-height: 1.2;
-    font-weight: normal;
-    text-align: center;
-    margin: 20px;
-  }
-  .bajada {
-    font-size: 18px;
-    font-weight: normal;
-    text-align: center;
-    margin: 10px;
-  }
-  .headline b {
-    display: block;
   }
 
   /* Estilos para el scroller */
