@@ -1,11 +1,10 @@
 <script lang="ts">
   import * as d3 from "d3";
   import type { Specie } from "./Specie";
-  import VerticalProgressBar from "./VerticalProgressBar.svelte";
+ 
 
   export let specie: Specie | null = null;
   console.log(specie);
-  export let progress;
 
   let getCoolSpecieName = d3
     .scaleOrdinal()
@@ -99,7 +98,7 @@ function calculateIntelligence(cranialCapacity, technoType) {
         />
       </div>
     </div>
-    <VerticalProgressBar></VerticalProgressBar>
+
   </div>
 {/if}
 

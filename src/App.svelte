@@ -3,8 +3,8 @@
   import Scroller from "@sveltejs/svelte-scroller";
   import { onMount } from "svelte";
   import * as d3 from "d3";
-
   import Characters from "./components/CharacterProfile.svelte";
+  import VerticalProgressBar from "./components/VerticalProgressBar.svelte";
 
   /* Variables para la data del medallero */
   let species = [];
@@ -61,8 +61,6 @@
     console.log(selectedSpecie);
   }
 
-  
-
   function startGame(event) {
     event.preventDefault();
     const anchor = document.getElementById("game-anchor");
@@ -90,11 +88,8 @@
       style="width: 40vw; height: auto; margin-top: 10%;"
     />
     <h1 style="text-align: center; width:100vw;">Evolution: The Game</h1>
-    <div class="row" style="margin-top: 5px;">
-      <button on:click={exploreCharacters}>Explore Characters</button>
-      <button on:click={startGame}>Play Game</button>
-    </div>
-   
+
+    <button on:click={exploreCharacters}>Explore Characters</button>
   </div>
 
   <!-- {#if progress < 1}
@@ -108,6 +103,7 @@
   <!-- Primer scroller -->
 
   <div id="start-anchor"></div>
+  <!-- <VerticalProgressBar></VerticalProgressBar> -->
   <Scroller
     {top}
     {threshold}
@@ -123,46 +119,36 @@
     <div slot="foreground" class="foreground_container">
       <section class="step_foreground">
         <div class="epi_foreground"></div>
-        <div style="height: 100vh;"></div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground"></div>
-        <div style="height: 100vh;"></div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground"></div>
-        <div style="height: 100vh;"></div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground"></div>
-        <div style="height: 100vh;"></div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground"></div>
-        <div style="height: 100vh;"></div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground"></div>
-        <div style="height: 100vh;"></div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground"></div>
-        <div style="height: 100vh;"></div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground"></div>
-        <div style="height: 100vh;"></div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground"></div>
-        <div style="height: 100vh;"></div>
       </section>
       <section class="step_foreground">
         <div class="epi_foreground"></div>
       </section>
       <section class="step_foreground">
         <div class="epi_foreground"></div>
-        <div style="height: 100vh;"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+      </section>
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
       </section>
     </div></Scroller
   >
