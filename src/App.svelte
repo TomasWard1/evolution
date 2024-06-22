@@ -4,13 +4,9 @@
   import { onMount } from "svelte";
   import * as d3 from "d3";
   import Characters from "./components/CharacterProfile.svelte";
-  import VerticalProgressBar from "./components/VerticalProgressBar.svelte";
 
-  /* Variables para la data del medallero */
   let species = [];
   let selectedSpecie;
-
-  /* Variables para el scroller*/
   let count;
   let index;
   let offset;
@@ -21,44 +17,17 @@
 
   onMount(() => {
     d3.csv("./data/evolution_average.csv", d3.autoType).then((data) => {
-      const speciesList = [];
-
-      // Map the data to instances of the Specie class
-      data.forEach((d, i) => {
-        const specie = new Specie(
-          i,
-          d.Genus_and_Specie,
-          d.Time,
-          d.Location,
-          d.Current_Country,
-          d.Cranial_Capacity,
-          d.Height,
-          d.Incisor_Size,
-          d.Prognathism,
-          d.Foramen_Mágnum_Position,
-          d.Canine_Size,
-          d.Canines_Shape,
-          d.Tooth_Enamel,
-          d.Tecno,
-          d.Tecno_type,
-          d.Diet,
-          d.Hip
-        );
-        speciesList.push(specie);
-      });
-
-      // Now speciesList contains a list of Specie objects
-      console.log(speciesList);
-      species = speciesList;
+      species = data;
       selectedSpecie = species[0];
-      console.log(selectedSpecie);
     });
   });
 
+  console.log(selectedSpecie)
+
   $: {
-    // Es un observer que se ejecuta cuando cambia el valor de index
+    // Un observer que se ejecuta cuando cambia el valor de index
+
     selectedSpecie = species[index];
-    console.log(selectedSpecie);
   }
 
   function startGame(event) {
@@ -87,23 +56,13 @@
       alt="Evolution Gif"
       style="width: 40vw; height: auto; margin-top: 10%;"
     />
-    <h1 style="text-align: center; width:100vw;">Evolution: The Game</h1>
+    <h1 style="text-align: center; width:100vw;">The game of evolution</h1>
 
     <button on:click={exploreCharacters}>Explore Characters</button>
   </div>
 
-  <!-- {#if progress < 1}
-  <DebugScroller
-    index={index}
-    count={count}
-    offset={offset}
-    progress={progress}
-  />
-  {/if}  -->
-  <!-- Primer scroller -->
-
   <div id="start-anchor"></div>
-  <!-- <VerticalProgressBar></VerticalProgressBar> -->
+
   <Scroller
     {top}
     {threshold}
@@ -113,8 +72,8 @@
     bind:offset
     bind:progress
   >
-    <div slot="background">
-      <Characters {progress} specie={selectedSpecie}></Characters>
+    <div slot="background" style="align-items: center; justify-content: center">
+      <Characters specie={selectedSpecie}></Characters>
     </div>
     <div slot="foreground" class="foreground_container">
       <section class="step_foreground">
@@ -152,6 +111,7 @@
       </section>
     </div></Scroller
   >
+
   <div id="game-anchor"></div>
   <div class="landing column">
     <img
@@ -162,41 +122,6 @@
     <h1 style="text-align: center; width:100vw;">Choose</h1>
     <button on:click={startGame}>Play</button>
   </div>
-  <!-- Segundo scroller -->
-  <!-- <Scroller
-    top={top2}
-    threshold={threshold2}
-    bottom={bottom2}
-    bind:count={count2}
-    bind:index={index2}
-    bind:offset={offset2}
-    bind:progress={progress2}
-  >
-    <div slot="background" class="image_container">
-      <img src="/images/{charts[index2]}" alt="chart {index2}" class="charts"
-      />
-    </div>
-    <div slot="foreground" class="foreground_container">
-      <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Seccion {index2 + 1}</h3>
-          <p>Gráfico 1</p>
-        </div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Seccion {index2 + 1}</h3>
-          <p>Gráfico 1</p>
-        </div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Seccion {index2 + 1}</h3>
-          <p>Gráfico 1</p>
-        </div>
-      </section>
-    </div>
-  </Scroller> -->
 </main>
 
 <style>
@@ -205,7 +130,6 @@
     display: flex;
   }
 
-  /* Estilos para el scroller */
   .foreground_container {
     pointer-events: none;
     padding-left: 85%;
