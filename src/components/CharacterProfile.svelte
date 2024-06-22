@@ -2,7 +2,6 @@
   import * as d3 from "d3";
   export let specie;
   import { LayerCake, Svg } from "layercake";
-  import { scaleLinear } from "d3-scale";
   import Radar from "../components/Radar.svelte";
   import AxisRadial from "./AxisRadial.svelte";
 
@@ -16,7 +15,7 @@
   ];
 
   const seriesKey = "name";
-  const xKey = ["time", "change", "slider", "cutter", "curve"];
+  const xKey = ["time", "height", "cranialCapacity"];
 
   const seriesNames = Object.keys(data[0]).filter(
     (d) => d !== seriesKey
@@ -163,8 +162,8 @@
 {/if}
 <style>
   .chart-container {
-    width: 100%;
-    height: 100%;
+    width: 30%;
+    height: 25px;
   }
   .background {
     align-items: center;
