@@ -4,9 +4,48 @@
   import { onMount } from "svelte";
   import * as d3 from "d3";
   import Characters from "./components/CharacterProfile.svelte";
+  import data from "../public/data/evolution_average.csv";
+  import { LayerCake, Svg } from "layercake";
+  import Radar from "./components/Radar.svelte";
+  import AxisRadial from "./components/AxisRadial.svelte";
+  import data2 from "./components/test.csv";
 
+  const seriesKey = "name";
+  const xKey = ["fastball", "change", "slider", "cutter", "curve"];
+
+  const seriesNames = Object.keys(data2[0]).filter((d) => d !== seriesKey);
+
+  data2.forEach((d) => {
+    seriesNames.forEach((name) => {
+      d[name] = +d[name];
+    });
+  });
   let species = [];
-  let selectedSpecie;
+
+  data.forEach((d, i) => {
+    const specie = new Specie(
+      i,
+      d.Genus_and_Specie,
+      d.Time,
+      d.Location,
+      d.Current_Country,
+      d.Cranial_Capacity,
+      d.Height,
+      d.Incisor_Size,
+      d.Prognathism,
+      d.Foramen_Mágnum_Position,
+      d.Canine_Size,
+      d.Canines_Shape,
+      d.Tooth_Enamel,
+      d.Tecno,
+      d.Tecno_type,
+      d.Diet,
+      d.Hip
+    );
+    species.push(specie);
+  });
+
+  let selectedSpecie = species[0];
   let count;
   let index;
   let offset;
@@ -14,36 +53,6 @@
   let top = 0.1;
   let threshold = 0.5;
   let bottom = 0.9;
-
-  onMount(() => {
-    d3.csv("./data/evolution_average.csv", d3.autoType).then((data) => {
-      const speciesList = [];
-    
-      data.forEach((d, i) => {
-        const specie = new Specie(
-          i,
-          d.Genus_and_Specie,
-          d.Time,
-          d.Location,
-          d.Current_Country,
-          d.Cranial_Capacity,
-          d.Height,
-          d.Incisor_Size,
-          d.Prognathism,
-          d.Foramen_Mágnum_Position,
-          d.Canine_Size,
-          d.Canines_Shape,
-          d.Tooth_Enamel,
-          d.Tecno,
-          d.Tecno_type,
-          d.Diet,
-          d.Hip
-        );
-        speciesList.push(specie);
-      });
-      species = speciesList;
-    });
-  });
 
   $: {
     // Un observer que se ejecuta cuando cambia el valor de index
@@ -81,7 +90,20 @@
 </div>
 
 <div id="start-anchor"></div>
-
+<div class="chart-container">
+  <LayerCake
+    padding={{ top: 30, right: 0, bottom: 7, left: 0 }}
+    x={xKey}
+    xDomain={[0, 10]}
+    xRange={({ height }) => [0, height / 2]}
+    {data}
+  >
+    <Svg>
+      <AxisRadial />
+      <Radar />
+    </Svg>
+  </LayerCake>
+</div>
 <Scroller
   {top}
   {threshold}
@@ -97,39 +119,11 @@
     {/if}
   </div>
   <div slot="foreground" class="foreground_container">
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
-    <section class="step_foreground">
-      <div class="epi_foreground"></div>
-    </section>
+    {#each Array.from({ length: 11 }, (_, i) => i) as item}
+      <section class="step_foreground">
+        <div class="epi_foreground"></div>
+      </section>
+    {/each}
   </div></Scroller
 >
 
@@ -145,6 +139,10 @@
 </div>
 
 <style>
+  .chart-container {
+    width: 100%;
+    height: 250px;
+  }
   .landing {
     height: 100vh;
     display: flex;

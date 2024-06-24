@@ -4,15 +4,18 @@
   import { LayerCake, Svg } from "layercake";
   import Radar from "../components/Radar.svelte";
   import AxisRadial from "./AxisRadial.svelte";
+  import data from "./test.csv";
 
-  let data = [
-    {
-      name: specie.name,
-      time: specie.time,
-      height: specie.height,
-      cranialCapacity: specie.cranialCapacity
-    },
-  ];
+  console.log(data);
+
+  // let data = [
+  //   {
+  //     name: specie.name,
+  //     time: specie.time,
+  //     height: specie.height,
+  //     cranialCapacity: specie.cranialCapacity
+  //   },
+  // ];
 
   const seriesKey = "name";
   const xKey = ["time", "height", "cranialCapacity"];
@@ -96,74 +99,13 @@
 
 </script>
 {#if (specie != undefined)}
-  <div class="background">
-    <div class="row" style="align-items: start;">
-      <div class="column" style="align-items: start;">
-        <div class="specie-details">
-          <h2>{getCoolSpecieName(specie.id.toString())}</h2>
-          <p>Strength</p>
-          <div class="progress">
-            <!-- Use inline style to dynamically set width based on progress -->
-            <div
-              class="progress-value"
-              style="--width:{calculateStrength(
-                specie.height,
-                specie.cranialCapacity,
-                specie.hip
-              )}%"
-            ></div>
-          </div>
-          <p>Inteligence</p>
-          <div class="progress">
-            <!-- Use inline style to dynamically set width based on progress -->
-            <div
-              class="progress-value"
-              style="--width:{calculateIntelligence(
-                specie.cranialCapacity,
-                specie.tecnoType
-              )}%"
-            ></div>
-          </div>
-          <p>Agility</p>
-          <div class="progress">
-            <!-- Use inline style to dynamically set width based on progress -->
-            <div
-              class="progress-value"
-              style="--width:{calculateAgility(
-                specie.height,
-                specie.incisorSize,
-                specie.canineSize
-              )}%"
-            ></div>
-          </div>
-          <div class="chart-container">
-            <LayerCake
-              padding={{ top: 30, right: 0, bottom: 7, left: 0 }}
-              x={xKey}
-              xDomain={[0, 10]}
-              xRange={({ height }) => [0, height / 2]}
-              {data}
-            >
-              <Svg>
-                <AxisRadial />
-                <Radar />
-              </Svg>
-            </LayerCake>
-          </div>
-        </div>
-      </div>
-      <img
-        src="images/{specie.id}.png"
-        alt="avatar"
-        style="width: auto; height: 60vh;"
-      />
-    </div>
-  </div>
+
+ 
 {/if}
 <style>
   .chart-container {
-    width: 30%;
-    height: 25px;
+    width: 100%;
+    height: 250px;
   }
   .background {
     align-items: center;
