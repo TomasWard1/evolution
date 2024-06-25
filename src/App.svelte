@@ -5,7 +5,7 @@
   import * as d3 from "d3";
   import Characters from "./components/CharacterProfile.svelte";
   import data from "../public/data/evolution_average.csv";
-  import Radar from "./components/RadarChart.svelte";
+  import RadarChart from "./components/RadarChart.svelte";
 
   let species = [];
 
@@ -77,10 +77,8 @@
     <button on:click={exploreCharacters}>Explore Characters</button>
   </div>
 
-  <Radar></Radar>
-
   <div id="start-anchor"></div>
-
+ 
   <Scroller
     {top}
     {threshold}

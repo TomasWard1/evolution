@@ -33,6 +33,12 @@ p {
   display: block;
 }
 
+.center {
+align-items: center;
+justify-content: center;
+display: flex;
+}
+
 h1 {
   font-size: 70px;
   font-family: "Arcade";
