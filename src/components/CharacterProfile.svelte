@@ -28,8 +28,6 @@
     .range([1, 10]);
   let heightScale = d3.scaleLinear().domain([110, 170]).range([1, 10]);
 
-  let coolName = getCoolSpecieName(specie.id.toString());
-
   function calculateStrength(height, cranialCapacity, hipStructure) {
     // Normalize each variable between 0 and 1
     const normalizedHeight = height / 170; // Assuming maximum height is 170 (Homo Sapiens)
@@ -81,10 +79,11 @@
 </script>
 
 {#if specie != undefined}
+   <!-- TODO Add chips with metadata -->
   <div class="row" style="align-items: start;">
     <div class="column" style="align-items: start;">
       <div class="specie-details">
-        <h2>{coolName}</h2>
+        <h2>{getCoolSpecieName(specie.id.toString())}</h2>
         <p>Strength</p>
         <div class="progress">
           <!-- Use inline style to dynamically set width based on progress -->
@@ -140,15 +139,22 @@
         </div> -->
       </div>
     </div>
+  
     <img
       src="images/{specie.id}.png"
       alt="avatar"
-      style="width: auto; height: 60vh;"
+      class="float"
+      style="width: auto; height: 80vh;"
     />
   </div>
 {/if}
 
 <style>
+
+  .float {
+    transform: translatey(0px);
+	  animation: float 1s ease-in-out infinite;
+  }
   .progress {
     background: rgba(255, 255, 255, 0.1);
     justify-content: flex-start;
@@ -157,7 +163,7 @@
     margin-bottom: 30px;
     position: relative;
     display: flex;
-    height: 20px;
+    height: 5px;
     width: 500px;
   }
 
@@ -166,7 +172,7 @@
     box-shadow: 0 10px 40px -10px #fff;
     border-radius: 100px;
     background: #fff;
-    height: 25px;
+    height: 5px;
   }
 
   @keyframes load {
@@ -177,4 +183,19 @@
       width: var(--width);
     }
   }
+
+  @keyframes float {
+	0% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+	50% {
+		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+		transform: translatey(-5px);
+	}
+	100% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+}
 </style>
