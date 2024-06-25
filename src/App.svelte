@@ -6,6 +6,7 @@
   import Characters from "./components/CharacterProfile.svelte";
   import data from "../public/data/evolution_average.csv";
   import RadarChart from "./components/RadarChart.svelte";
+  import Picker from "./components/PickCharacter.svelte";
 
   let species = [];
 
@@ -40,6 +41,23 @@
   let top = 0.1;
   let threshold = 0.5;
   let bottom = 0.9;
+
+  let getCoolSpecieName = d3
+    .scaleOrdinal()
+    .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
+    .range([
+      "ANAMENSIS",
+      "RAMIDUS",
+      "AFARENSIS",
+      "AFRICANUS",
+      "HABILIS",
+      "RUDOLFENSIS",
+      "GARHI",
+      "ERGASTER",
+      "ERECTUS",
+      "SAPIENS",
+      "NEANDERTHALENSIS",
+    ]);
 
   $: {
     // Un observer que se ejecuta cuando cambia el valor de index
@@ -78,7 +96,7 @@
   </div>
 
   <div id="start-anchor"></div>
- 
+
   <Scroller
     {top}
     {threshold}
@@ -90,7 +108,7 @@
   >
     <div slot="background">
       {#if selectedSpecie != undefined}
-        <Characters specie={selectedSpecie}></Characters>
+        <Characters specie={selectedSpecie} {getCoolSpecieName}></Characters>
       {/if}
     </div>
     <div slot="foreground" class="foreground_container">
@@ -103,14 +121,13 @@
   >
 
   <div id="game-anchor"></div>
-  <div class="landing column">
-    <img
-      src="images/evolution.gif"
-      alt="Evolution Gif"
-      style="width: 40vw; height: auto; top: 100px;"
-    />
-    <h1 style="text-align: center; width:100vw;">Choose</h1>
-    <button on:click={startGame}>Play</button>
+  <div class="landing column" style="justify-content: center;">
+    <h1 style="text-align: center; width:100vw;">Choose your fighters</h1>
+    <div class="row">
+      <Picker {species} {getCoolSpecieName}/>
+      <Picker {species} {getCoolSpecieName}/>
+    </div>
+    <button on:click={startGame}>FIGHT!</button>
   </div>
 </main>
 

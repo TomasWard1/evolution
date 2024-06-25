@@ -1,26 +1,10 @@
 <script>
   import * as d3 from "d3";
   export let specie;
+  export let getCoolSpecieName;
   import RadarChart from "./RadarChart.svelte";
 
   //d3 Scales
-  let getCoolSpecieName = d3
-    .scaleOrdinal()
-    .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
-    .range([
-      "ANAMENSIS",
-      "RAMIDUS",
-      "AFARENSIS",
-      "AFRICANUS",
-      "HABILIS",
-      "RUDOLFENSIS",
-      "GARHI",
-      "ERGASTER",
-      "ERECTUS",
-      "SAPIENS",
-      "NEANDERTHALENSIS",
-    ]);
-
   let timeScale = d3.scaleLinear().domain([0.5, 4.4]).range([1, 10]);
   let cranialCapacityScale = d3
     .scaleLinear()
@@ -151,10 +135,7 @@
 
 <style>
 
-  .float {
-    transform: translatey(0px);
-	  animation: float 1s ease-in-out infinite;
-  }
+
   .progress {
     background: rgba(255, 255, 255, 0.1);
     justify-content: flex-start;
@@ -184,18 +165,5 @@
     }
   }
 
-  @keyframes float {
-	0% {
-		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-		transform: translatey(0px);
-	}
-	50% {
-		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
-		transform: translatey(-5px);
-	}
-	100% {
-		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-		transform: translatey(0px);
-	}
-}
+  
 </style>
