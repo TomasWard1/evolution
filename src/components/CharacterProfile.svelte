@@ -1,35 +1,7 @@
 <script>
   import * as d3 from "d3";
   export let specie;
-  import { LayerCake, Svg } from "layercake";
-  import Radar from "../components/Radar.svelte";
-  import AxisRadial from "./AxisRadial.svelte";
-  import data from "./test.csv";
-
-  console.log(data);
-
-  // let data = [
-  //   {
-  //     name: specie.name,
-  //     time: specie.time,
-  //     height: specie.height,
-  //     cranialCapacity: specie.cranialCapacity
-  //   },
-  // ];
-
-  const seriesKey = "name";
-  const xKey = ["time", "height", "cranialCapacity"];
-
-  const seriesNames = Object.keys(data[0]).filter(
-    (d) => d !== seriesKey
-  );
-
-  data.forEach((d) => {
-    seriesNames.forEach((name) => {
-      d[name] = +d[name];
-    });
-  });
-
+  import Radar from "./RadarChart.svelte";
   let getCoolSpecieName = d3
     .scaleOrdinal()
     .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
@@ -95,18 +67,71 @@
     // Convert intelligence score to a number between 1 and 100
     return Math.round(intelligenceScore * 100);
   }
-
-
 </script>
-{#if (specie != undefined)}
 
- 
+{#if specie != undefined}
+  <div class="background">
+    <div class="row" style="align-items: start;">
+      <div class="column" style="align-items: start;">
+        <div class="specie-details">
+          <h2>{getCoolSpecieName(specie.id.toString())}</h2>
+          <p>Strength</p>
+          <div class="progress">
+            <!-- Use inline style to dynamically set width based on progress -->
+            <div
+              class="progress-value"
+              style="--width:{calculateStrength(
+                specie.height,
+                specie.cranialCapacity,
+                specie.hip
+              )}%"
+            ></div>
+          </div>
+          <p>Inteligence</p>
+          <div class="progress">
+            <!-- Use inline style to dynamically set width based on progress -->
+            <div
+              class="progress-value"
+              style="--width:{calculateIntelligence(
+                specie.cranialCapacity,
+                specie.tecnoType
+              )}%"
+            ></div>
+          </div>
+          <p>Agility</p>
+          <div class="progress">
+            <!-- Use inline style to dynamically set width based on progress -->
+            <div
+              class="progress-value"
+              style="--width:{calculateAgility(
+                specie.height,
+                specie.incisorSize,
+                specie.canineSize
+              )}%"
+            ></div>
+          </div>
+          <Radar
+            data={[
+              {
+                "name": getCoolSpecieName(specie.id.toString()),
+                "height": specie.height,
+                "cranial_capacity": specie.cranialCapacity,
+                "time": specie.time,
+              },
+            ]}
+          ></Radar>
+        </div>
+      </div>
+      <img
+        src="images/{specie.id}.png"
+        alt="avatar"
+        style="width: auto; height: 60vh;"
+      />
+    </div>
+  </div>
 {/if}
+
 <style>
-  .chart-container {
-    width: 100%;
-    height: 250px;
-  }
   .background {
     align-items: center;
     justify-content: center;

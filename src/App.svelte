@@ -5,21 +5,8 @@
   import * as d3 from "d3";
   import Characters from "./components/CharacterProfile.svelte";
   import data from "../public/data/evolution_average.csv";
-  import { LayerCake, Svg } from "layercake";
-  import Radar from "./components/Radar.svelte";
-  import AxisRadial from "./components/AxisRadial.svelte";
-  import data2 from "./components/test.csv";
+  import Radar from "./components/RadarChart.svelte";
 
-  const seriesKey = "name";
-  const xKey = ["fastball", "change", "slider", "cutter", "curve"];
-
-  const seriesNames = Object.keys(data2[0]).filter((d) => d !== seriesKey);
-
-  data2.forEach((d) => {
-    seriesNames.forEach((name) => {
-      d[name] = +d[name];
-    });
-  });
   let species = [];
 
   data.forEach((d, i) => {
@@ -78,71 +65,58 @@
   }
 </script>
 
-<div class="landing column">
-  <img
-    src="images/evolution.gif"
-    alt="Evolution Gif"
-    style="width: 40vw; height: auto; margin-top: 10%;"
-  />
-  <h1 style="text-align: center; width:100vw;">The game of evolution</h1>
+<main>
+  <div class="landing column">
+    <img
+      src="images/evolution.gif"
+      alt="Evolution Gif"
+      style="width: 40vw; height: auto; margin-top: 10%;"
+    />
+    <h1 style="text-align: center; width:100vw;">The game of evolution</h1>
 
-  <button on:click={exploreCharacters}>Explore Characters</button>
-</div>
-
-<div id="start-anchor"></div>
-<div class="chart-container">
-  <LayerCake
-    padding={{ top: 30, right: 0, bottom: 7, left: 0 }}
-    x={xKey}
-    xDomain={[0, 10]}
-    xRange={({ height }) => [0, height / 2]}
-    {data}
-  >
-    <Svg>
-      <AxisRadial />
-      <Radar />
-    </Svg>
-  </LayerCake>
-</div>
-<Scroller
-  {top}
-  {threshold}
-  {bottom}
-  bind:count
-  bind:index
-  bind:offset
-  bind:progress
->
-  <div slot="background">
-    {#if selectedSpecie != undefined}
-      <Characters specie={selectedSpecie}></Characters>
-    {/if}
+    <button on:click={exploreCharacters}>Explore Characters</button>
   </div>
-  <div slot="foreground" class="foreground_container">
-    {#each Array.from({ length: 11 }, (_, i) => i) as item}
-      <section class="step_foreground">
-        <div class="epi_foreground"></div>
-      </section>
-    {/each}
-  </div></Scroller
->
 
-<div id="game-anchor"></div>
-<div class="landing column">
-  <img
-    src="images/evolution.gif"
-    alt="Evolution Gif"
-    style="width: 40vw; height: auto; top: 100px;"
-  />
-  <h1 style="text-align: center; width:100vw;">Choose</h1>
-  <button on:click={startGame}>Play</button>
-</div>
+  <Radar></Radar>
+
+  <div id="start-anchor"></div>
+
+  <Scroller
+    {top}
+    {threshold}
+    {bottom}
+    bind:count
+    bind:index
+    bind:offset
+    bind:progress
+  >
+    <div slot="background">
+      {#if selectedSpecie != undefined}
+        <Characters specie={selectedSpecie}></Characters>
+      {/if}
+    </div>
+    <div slot="foreground" class="foreground_container">
+      {#each Array.from({ length: 11 }, (_, i) => i) as item}
+        <section class="step_foreground">
+          <div class="epi_foreground"></div>
+        </section>
+      {/each}
+    </div></Scroller
+  >
+
+  <div id="game-anchor"></div>
+  <div class="landing column">
+    <img
+      src="images/evolution.gif"
+      alt="Evolution Gif"
+      style="width: 40vw; height: auto; top: 100px;"
+    />
+    <h1 style="text-align: center; width:100vw;">Choose</h1>
+    <button on:click={startGame}>Play</button>
+  </div>
+</main>
 
 <style>
-  .chart-container {
-    width: 100%;
-    height: 250px;
-  }
   .landing {
     height: 100vh;
     display: flex;
