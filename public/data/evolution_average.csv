@@ -1,0 +1,12 @@
+Genus_and_Specie,Time,Location,Current_Country,Cranial_Capacity,Height,Incisor_Size,Prognathism,Foramen_Mágnum_Position,Canine Size,Canines_Shape,Tooth_Enamel,Tecno,Tecno_type,Diet,Hip
+Australopithecus Anamensis,4.4,Africa,Kenya,346,120,big,high,anterior,big,incisiform,thick,no,no,dry fruits,wide
+hominino Ardipithecus ramidus / kabadda,4.2,Africa,Ethiopia,300,110,small,high,semi-anterior,small,conicalls,thick-medium,no,no,soft fruits,wide
+Australopithecus Afarensis,4.1,Africa,Kenya,345,130,big,high,anterior,big,incisiform,thick,no,no,dry fruits,slim
+Australopithecus Africanus,3.7,Africa,South Africa,554,110,small,medium-high,anterior,small,incisiform,thick,no,no,dry fruits,wide
+Homo Habilis,2.7,Africa,Ethiopia,745,130,small,medium,anterior,small,incisiform,medium-thin,yes,mode 1,omnivore,modern
+Homo Rudolfensis,2.7,Africa,Kenya,680,130,small,medium-high,anterior,big,conicalls,thick,no,no,hard fruits,slim
+Australopithecus Garhi,2.7,Africa,Ethiopia,375,120,big,medium-high,anterior,big,conicalls,thick,likely,primitive,omnivore,slim
+Homo Ergaster,1.7,Africa,Kenya,840,160,very small,reduced,modern,small,incisiform,medium-thin,yes,mode 2,omnivore,modern
+Homo Erectus,1.5,Asia,Indonesia,1047,160,very small,reduced,modern,small,incisiform,thick,yes,mode 1,omnivore,modern
+Homo Sapiens,0.5,Africa,Kenya,1236,170,very small,absent,modern,small,incisiform,very thin,yes,mode 4,carnivorous,very modern
+Homo Neanderthalensis,0.5,Europe,Germany,1100,160,big,reduced,modern,small,incisiform,thin,yes,mode 3,carnivorous,very modern

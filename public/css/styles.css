@@ -13,17 +13,55 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+  font-family: "Arcade";
+  src: url("../fonts/ARCADECLASSIC.woff") format("woff");
+  /* Add other font properties if needed */
+}
+
 body {
   background-color: black;
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
+  margin: 0px;
+  box-sizing: border-box;
   overflow-x: hidden;
+}
+
+p {
+  font-family: "Open Sans";
+  font-size: 15px;
+  color: white;
+  display: block;
+}
+
+.center {
+align-items: center;
+justify-content: center;
+display: flex;
 }
 
 h1 {
   font-size: 70px;
+  font-family: "Arcade";
   color: white;
+  display: block;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
+
+h2 {
+  font-family: "Arcade";
+  font-size: 60px;
+  color: white;
+  display: block;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
+
+h3 {
+  font-family: "Open Sans";
+  font-size: 30px;
+  color: white;
+  font-weight: normal;
   display: block;
   margin-block-start: 0px;
   margin-block-end: 0px;
@@ -33,32 +71,41 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 10px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around; /* Distribute items evenly */
+  gap: 10px; /* Space between items */
+  padding: 10px; /* Optional: padding for the row */
+  border-radius: 8px; /* Optional: rounded corners */
 }
 
 .card {
   padding: 2em;
 }
 
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
+  font-family: "Open Sans";
   font-weight: 500;
-  font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: white;
+  border-width: 3px;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 5px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {

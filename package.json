@@ -9,13 +9,20 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@rollup/plugin-dsv": "^3.0.4",
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
-    "svelte": "^4.2.8",
+    "rollup-plugin-svelte": "^7.2.2",
+    "svelte": "^4.2.18",
     "vite": "^5.0.8"
   },
   "dependencies": {
     "@sveltejs/svelte-scroller": "^2.0.7",
     "@types/d3": "^7.4.3",
-    "d3": "^7.8.5"
+    "d3": "^7.8.5",
+    "d3-array": "^3.2.4",
+    "d3-scale": "^4.0.2",
+    "layercake": "^8.3.0",
+    "layerchart": "^0.41.6",
+    "svelte-countup": "^0.2.8"
   }
 }
