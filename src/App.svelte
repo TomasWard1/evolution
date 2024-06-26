@@ -73,6 +73,14 @@
     });
   }
 
+  let fightLoading = false;
+  function simulateFight(event) {
+    fightLoading = true;
+    setTimeout(() => {
+      fightLoading = false;
+    }, 3000); // 3000 milliseconds = 3 seconds
+  }
+
   function exploreCharacters(event) {
     event.preventDefault();
     const anchor = document.getElementById("start-anchor");
@@ -84,14 +92,20 @@
 </script>
 
 <main>
-  <div class="landing column">
+  <div class="landing column" style="z-index: 4;">
     <img
       src="images/evolution.gif"
       alt="Evolution Gif"
-      style="width: 40vw; height: auto; margin-top: 10%;"
+      style="width: 40vw; height: auto; margin-top: 10%; z-index: 4;"
     />
-    <h1 style="text-align: center; width:100vw;">The game of evolution</h1>
-
+    <h1 style="text-align: center; width:100vw; height: 10vh;">The game of evolution</h1>
+    <p style="width: 45%; text-align: center;  margin-block-start: 0px;">
+      It's the year 2789. The US government is preparing for war. They've
+      discovered how to bring back one of our ancestor species to create an
+      army. But which? This software is designed to compare and pick the best of
+      our evolutionary species. The future of the United States is in your hands
+      - choose wisely.
+    </p>
     <button on:click={exploreCharacters}>Explore Characters</button>
   </div>
 
@@ -122,16 +136,44 @@
 
   <div id="game-anchor"></div>
   <div class="landing column" style="justify-content: center;">
-    <h1 style="text-align: center; width:100vw;">Choose your fighters</h1>
-    <div class="row">
-      <Picker {species} {getCoolSpecieName}/>
-      <Picker {species} {getCoolSpecieName}/>
+    <h1 style="text-align: center; width:100vw; margin-bottom: 30px;">
+      {fightLoading ? "Simulating..." : "Choose your fighters"}
+    </h1>
+    <div class="row" style="margin-bottom: 40px;">
+      <Picker {species} {getCoolSpecieName} playerNum="1" {fightLoading} />
+      <div style="width: 50px;"></div>
+      {#if fightLoading}
+        <div class="loader" style="display: block; margin-bottom:30px"></div>
+      {:else}
+        <div class="column">
+          <h1 style="text-align: center;">VS</h1>
+          <button on:click={simulateFight}>FIGHT!</button>
+        </div>
+      {/if}
+      <div style="width: 50px;"></div>
+
+      <Picker {species} {getCoolSpecieName} playerNum="2" {fightLoading} />
     </div>
-    <button on:click={startGame}>FIGHT!</button>
   </div>
 </main>
 
 <style>
+  .blurred-background {
+    position: relative;
+    overflow: hidden;
+    background-image: url("../images/jungle.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px);
+    z-index: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 10;
+  }
+
   .landing {
     height: 100vh;
     display: flex;

@@ -24,19 +24,27 @@ body {
   margin: 0px;
   box-sizing: border-box;
   overflow-x: hidden;
+
 }
 
 p {
   font-family: "Open Sans";
-  font-size: 15px;
+  font-size: 18px;
+  color: white;
+  display: block;
+}
+
+strong {
+  font-family: "Open Sans";
+  font-size: 18px;
   color: white;
   display: block;
 }
 
 .center {
-align-items: center;
-justify-content: center;
-display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 h1 {
@@ -93,6 +101,35 @@ h3 {
   padding: 2em;
 }
 
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  animation: l13-0 2s linear infinite;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(at 30% 30%, #0000, #000a) white;
+  animation: l13-1 0.5s cubic-bezier(0.5, -500, 0.5, 500) infinite;
+}
+.loader::after {
+  animation-delay: -0.15s;
+}
+@keyframes l13-0 {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes l13-1 {
+  100% {
+    transform: translate(0.5px);
+  }
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -127,16 +164,14 @@ button:focus-visible {
 }
 
 @keyframes float {
-	0% {
-		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-		transform: translatey(0px);
-	}
-	50% {
-		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
-		transform: translatey(-5px);
-	}
-	100% {
-		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-		transform: translatey(0px);
-	}
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-5px);
+  }
+  100% {
+
+    transform: translatey(0px);
+  }
 }

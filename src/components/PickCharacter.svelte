@@ -1,6 +1,8 @@
 <script>
   export let species;
   export let getCoolSpecieName;
+  export let playerNum;
+  export let fightLoading;
   let chosenSpecie = species[0];
 </script>
 
@@ -10,8 +12,10 @@
       src="images/{chosenSpecie.id}.png"
       alt="avatar"
       class="float"
-      style="width: auto; height: 40vh;"
+      style="width: auto; height: 50vh;"
     />
+    <h2 style="text-align: center;   font-size: 50px;">Player {playerNum}</h2>
+    {#if !fightLoading}
     <div class="picker-container">
       <select class="picker" bind:value={chosenSpecie}>
         {#each species as sp}
@@ -19,6 +23,8 @@
         {/each}
       </select>
     </div>
+    {/if}
+
   </div>
 {/if}
 
@@ -37,6 +43,7 @@
     appearance: none; /* Remove default styling */
     -webkit-appearance: none; /* Safari and Chrome */
     -moz-appearance: none; /* Firefox */
+    width: 220px;
   }
 
   .picker:hover {
@@ -52,6 +59,7 @@
   .picker-container {
     position: relative;
     display: inline-block;
+ 
   }
 
   .picker-container::after {
