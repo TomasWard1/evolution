@@ -119,24 +119,24 @@
             )}%"
           ></div>
         </div>
-        <div class="center" style="margin-top: 13%;">
+        <!-- <div class="center" style="margin-top: 13%;">
           <img src="images/{specie.id}radar.png" alt="avatar" style="width: 19vw;" />
-        </div>
+        </div> -->
       
-        <!-- <div
+        <div
           style="width: 100%px; height:300px;"
         >
           <RadarChart
             data={[
               {
-                name: coolName,
+                // name: coolName,
                 height: heightScale(specie.height),
                 cranial_capacity: cranialCapacityScale(specie.cranialCapacity),
                 time: timeScale(specie.time),
               },
             ]}
           ></RadarChart>
-        </div> -->
+        </div>
       </div>
     </div>
   
