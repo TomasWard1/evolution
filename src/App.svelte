@@ -6,6 +6,7 @@
   import Characters from "./components/CharacterProfile.svelte";
   import data from "../public/data/evolution_average.csv";
   import RadarChart from "./components/RadarChart.svelte";
+  import Picker from "./components/PickCharacter.svelte";
 
   let species = [];
 
@@ -41,6 +42,23 @@
   let threshold = 0.5;
   let bottom = 0.9;
 
+  let getCoolSpecieName = d3
+    .scaleOrdinal()
+    .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
+    .range([
+      "ANAMENSIS",
+      "RAMIDUS",
+      "AFARENSIS",
+      "AFRICANUS",
+      "HABILIS",
+      "RUDOLFENSIS",
+      "GARHI",
+      "ERGASTER",
+      "ERECTUS",
+      "SAPIENS",
+      "NEANDERTHALENSIS",
+    ]);
+
   $: {
     // Un observer que se ejecuta cuando cambia el valor de index
     selectedSpecie = species[index];
@@ -55,6 +73,14 @@
     });
   }
 
+  let fightLoading = false;
+  function simulateFight(event) {
+    fightLoading = true;
+    setTimeout(() => {
+      fightLoading = false;
+    }, 3000); // 3000 milliseconds = 3 seconds
+  }
+
   function exploreCharacters(event) {
     event.preventDefault();
     const anchor = document.getElementById("start-anchor");
@@ -66,19 +92,30 @@
 </script>
 
 <main>
-  <div class="landing column">
+  <div class="landing column" style="z-index: 4;">
     <img
       src="images/evolution.gif"
       alt="Evolution Gif"
-      style="width: 40vw; height: auto; margin-top: 10%;"
+      style="width: 40vw; height: auto; margin-top: 10%; z-index: 4;"
     />
-    <h1 style="text-align: center; width:100vw;">The game of evolution</h1>
-
-    <button on:click={exploreCharacters}>Explore Characters</button>
+    <h1 style="text-align: center; width:100vw; height: 10vh;">
+      WARNING! THIS IS NOT A GAME
+    </h1>
+    <p style="width: 60%; text-align: center;  margin-block-start: 0px;">
+      Damn... I knew this was going to happen. I've messed up. If you're reading
+      this, it's the year 2789. The US government has harnessed my cell cloning
+      algorithm to resurrect one of our ancestral species. Meanwhile, Russia is
+      on the brink of launching a nuclear attack. The only way to protect
+      ourselves is to create an ancestral army, despite the ethical dilemmas it
+      poses. This software is engineered to evaluate and select the optimal
+      evolutionary species for this purpose. The future of the United States
+      rests in your hands - choose wisely.
+    </p>
+    <button on:click={exploreCharacters}>Explore Species</button>
   </div>
 
   <div id="start-anchor"></div>
- 
+
   <Scroller
     {top}
     {threshold}
@@ -90,7 +127,7 @@
   >
     <div slot="background">
       {#if selectedSpecie != undefined}
-        <Characters specie={selectedSpecie}></Characters>
+        <Characters specie={selectedSpecie} {getCoolSpecieName}></Characters>
       {/if}
     </div>
     <div slot="foreground" class="foreground_container">
@@ -103,18 +140,45 @@
   >
 
   <div id="game-anchor"></div>
-  <div class="landing column">
-    <img
-      src="images/evolution.gif"
-      alt="Evolution Gif"
-      style="width: 40vw; height: auto; top: 100px;"
-    />
-    <h1 style="text-align: center; width:100vw;">Choose</h1>
-    <button on:click={startGame}>Play</button>
+  <div class="landing column" style="justify-content: center;">
+    <h1 style="text-align: center; width:100vw; margin-bottom: 30px;">
+      {fightLoading ? "Simulating..." : "Choose your fighters"}
+    </h1>
+    <div class="row" style="margin-bottom: 40px;">
+      <Picker {species} {getCoolSpecieName} playerNum="1" {fightLoading} />
+      <div style="width: 50px;"></div>
+      {#if fightLoading}
+        <div class="loader" style="display: block; margin-bottom:30px"></div>
+      {:else}
+        <div class="column">
+          <h1 style="text-align: center;">VS</h1>
+          <button on:click={simulateFight}>FIGHT!</button>
+        </div>
+      {/if}
+      <div style="width: 50px;"></div>
+
+      <Picker {species} {getCoolSpecieName} playerNum="2" {fightLoading} />
+    </div>
   </div>
 </main>
 
 <style>
+  .blurred-background {
+    position: relative;
+    overflow: hidden;
+    background-image: url("../images/jungle.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px);
+    z-index: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 10;
+  }
+
   .landing {
     height: 100vh;
     display: flex;

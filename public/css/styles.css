@@ -24,19 +24,27 @@ body {
   margin: 0px;
   box-sizing: border-box;
   overflow-x: hidden;
+
 }
 
 p {
   font-family: "Open Sans";
-  font-size: 15px;
+  font-size: 18px;
+  color: white;
+  display: block;
+}
+
+strong {
+  font-family: "Open Sans";
+  font-size: 18px;
   color: white;
   display: block;
 }
 
 .center {
-align-items: center;
-justify-content: center;
-display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 h1 {
@@ -84,8 +92,42 @@ h3 {
   border-radius: 8px; /* Optional: rounded corners */
 }
 
+.float {
+  transform: translatey(0px);
+  animation: float 1s ease-in-out infinite;
+}
+
 .card {
   padding: 2em;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  animation: l13-0 2s linear infinite;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(at 30% 30%, #0000, #000a) white;
+  animation: l13-1 0.5s cubic-bezier(0.5, -500, 0.5, 500) infinite;
+}
+.loader::after {
+  animation-delay: -0.15s;
+}
+@keyframes l13-0 {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes l13-1 {
+  100% {
+    transform: translate(0.5px);
+  }
 }
 
 button {
@@ -118,5 +160,18 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-5px);
+  }
+  100% {
+
+    transform: translatey(0px);
   }
 }
