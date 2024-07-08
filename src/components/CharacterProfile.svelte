@@ -154,7 +154,7 @@
               },
             ]}
           ></RadarChart>
-        </div> -->
+        </div>
       </div>
     </div>
     <img
