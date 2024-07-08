@@ -98,15 +98,20 @@
       alt="Evolution Gif"
       style="width: 40vw; height: auto; margin-top: 10%; z-index: 4;"
     />
-    <h1 style="text-align: center; width:100vw; height: 10vh;">The game of evolution</h1>
-    <p style="width: 45%; text-align: center;  margin-block-start: 0px;">
-      It's the year 2789. The US government is preparing for war. They've
-      discovered how to bring back one of our ancestor species to create an
-      army. But which? This software is designed to compare and pick the best of
-      our evolutionary species. The future of the United States is in your hands
-      - choose wisely.
+    <h1 style="text-align: center; width:100vw; height: 10vh;">
+      WARNING! THIS IS NOT A GAME
+    </h1>
+    <p style="width: 60%; text-align: center;  margin-block-start: 0px;">
+      Damn... I knew this was going to happen. I've messed up. If you're reading
+      this, it's the year 2789. The US government has harnessed my cell cloning
+      algorithm to resurrect one of our ancestral species. Meanwhile, Russia is
+      on the brink of launching a nuclear attack. The only way to protect
+      ourselves is to create an ancestral army, despite the ethical dilemmas it
+      poses. This software is engineered to evaluate and select the optimal
+      evolutionary species for this purpose. The future of the United States
+      rests in your hands - choose wisely.
     </p>
-    <button on:click={exploreCharacters}>Explore Characters</button>
+    <button on:click={exploreCharacters}>Explore Species</button>
   </div>
 
   <div id="start-anchor"></div>
