@@ -3,7 +3,7 @@
   export let getCoolSpecieName;
   export let playerNum;
   export let fightLoading;
-  let chosenSpecie = species[0];
+export let chosenSpecie;
 </script>
 
 {#if chosenSpecie != undefined}
@@ -14,7 +14,7 @@
       class="float"
       style="width: auto; height: 50vh;"
     />
-    <h2 style="text-align: center;   font-size: 50px;">Player {playerNum}</h2>
+    <h2 style="text-align: center;   font-size: 50px;">Specie {playerNum}</h2>
     {#if !fightLoading}
     <div class="picker-container">
       <select class="picker" bind:value={chosenSpecie}>

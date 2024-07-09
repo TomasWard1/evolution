@@ -9,13 +9,13 @@
     const { data, width, height, xGet, config } = getContext('LayerCake');
   
     /**  @type {String} [fill='#f0c'] The radar's fill color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
-    export let fill = '#f0c'
+    export let fill = '#ffffff'
   
     /**  @type {String} [stroke='#f0c'] The radar's stroke color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
-    export let stroke = '#f0c'
+    export let stroke = '#ffffff'
   
     /**  @type {Number} [stroke=2] The radar's stroke color. */
-    export let strokeWidth = 2
+    export let strokeWidth = 1
   
     /**  @type {Number} [fillOpacity=0.5] The radar's fill opacity. */
     export let fillOpacity = 0.5
@@ -24,7 +24,7 @@
     export let r = 4.5;
   
     /**  @type {String} [circleFill="#f0c"] Each circle's fill color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
-    export let circleFill = "#f0c";
+    export let circleFill = "#ffffff";
   
     /**  @type {String} [circleStroke="#fff"] Each circle's stroke color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
     export let circleStroke = "#fff";

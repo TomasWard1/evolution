@@ -9,7 +9,7 @@
   console.log(data);
 
   const seriesKey = "name";
-  const xKey = ["time",'height','cranial_capacity'];
+  const xKey = ["World Knowledge",'Height','Cranial Capacity'];
 
   const seriesNames = Object.keys(data[0]).filter((d) => d !== seriesKey);
 

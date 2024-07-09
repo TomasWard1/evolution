@@ -75,7 +75,7 @@
     <div class="column" style="align-items: start;">
       <div class="specie-details">
         <h2>{getCoolSpecieName(specie.id.toString())}</h2>
-        <div class="row" style="padding: 0%; justify-content:start;">
+        <div class="row" style="padding: 0%; justify-content:start; align-items:center;">
           <p>Strength</p>
           <strong
             >{calculateStrength(
@@ -95,7 +95,7 @@
             )}
           ></div>
         </div>
-        <div class="row" style="padding: 0%; justify-content:start;">
+        <div class="row" style="padding: 0%; justify-content:start;align-items:center;">
           <p>Intelligence</p>
           <strong
             >{calculateIntelligence(
@@ -113,7 +113,7 @@
             )}
           ></div>
         </div>
-        <div class="row" style="padding: 0%; justify-content:start;">
+        <div class="row" style="padding: 0%; justify-content:start;align-items:center;">
           <p>Agility</p>
           <strong
             >{calculateAgility(
@@ -133,30 +133,29 @@
             )}
           ></div>
         </div>
-        <div class="center" style="margin-top: 13%;">
+        <!-- <div class="center" style="margin-top: 13%;">
           <img
             src="images/{specie.id}radar.png"
             alt="avatar"
             style="width: 19vw;"
           />
-        </div>
+        </div> -->
 
-        <!-- <div
-          style="width: 100%px; height:300px;"
-        >
+        <div style="width: 100%; height:210px; padding-top: 10%">
           <RadarChart
             data={[
               {
                 name: getCoolSpecieName(specie.id.toString()),
-                height: heightScale(specie.height),
-                cranial_capacity: cranialCapacityScale(specie.cranialCapacity),
-                time: timeScale(specie.time),
+                "Height": heightScale(specie.height),
+                "Cranial Capacity": cranialCapacityScale(specie.cranialCapacity),
+                "World Knowledge": timeScale(specie.time),
               },
             ]}
           ></RadarChart>
         </div>
       </div>
     </div>
+
     <img
       src="images/{specie.id}.png"
       alt="avatar"

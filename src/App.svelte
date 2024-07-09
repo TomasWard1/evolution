@@ -6,7 +6,7 @@
   import Characters from "./components/CharacterProfile.svelte";
   import data from "../public/data/evolution_average.csv";
   import RadarChart from "./components/RadarChart.svelte";
-  import Picker from "./components/PickCharacter.svelte";
+  import Simulator from "./components/Simulator.svelte";
 
   let species = [];
 
@@ -42,6 +42,15 @@
   let threshold = 0.5;
   let bottom = 0.9;
 
+  let leaderboardMap = [
+    { name: "ANAMENSIS", kills: 12 },
+    { name: "RAMIDUS", kills: 9 },
+    { name: "RUDOLFENSIS", kills: 15 },
+  ];
+
+  let chosenSpecie1 = species[0];
+  let chosenSpecie2 = species[1];
+
   let getCoolSpecieName = d3
     .scaleOrdinal()
     .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
@@ -56,7 +65,7 @@
       "ERGASTER",
       "ERECTUS",
       "SAPIENS",
-      "NEANDERTHALENSIS",
+      "NEANDERTHAL",
     ]);
 
   $: {
@@ -74,11 +83,12 @@
   }
 
   let fightLoading = false;
+  
   function simulateFight(event) {
     fightLoading = true;
     setTimeout(() => {
       fightLoading = false;
-    }, 3000); // 3000 milliseconds = 3 seconds
+    }, 1000); // 3000 milliseconds = 3 seconds
   }
 
   function exploreCharacters(event) {
@@ -92,7 +102,7 @@
 </script>
 
 <main>
-  <div class="landing column" style="z-index: 4;">
+  <div class="landing column">
     <img
       src="images/evolution.gif"
       alt="Evolution Gif"
@@ -138,52 +148,18 @@
       {/each}
     </div></Scroller
   >
-
-  <div id="game-anchor"></div>
-  <div class="landing column" style="justify-content: center;">
-    <h1 style="text-align: center; width:100vw; margin-bottom: 30px;">
-      {fightLoading ? "Simulating..." : "Choose your fighters"}
-    </h1>
-    <div class="row" style="margin-bottom: 40px;">
-      <Picker {species} {getCoolSpecieName} playerNum="1" {fightLoading} />
-      <div style="width: 50px;"></div>
-      {#if fightLoading}
-        <div class="loader" style="display: block; margin-bottom:30px"></div>
-      {:else}
-        <div class="column">
-          <h1 style="text-align: center;">VS</h1>
-          <button on:click={simulateFight}>FIGHT!</button>
-        </div>
-      {/if}
-      <div style="width: 50px;"></div>
-
-      <Picker {species} {getCoolSpecieName} playerNum="2" {fightLoading} />
-    </div>
-  </div>
+  <Simulator
+    {species}
+    {fightLoading}
+    {simulateFight}
+    {getCoolSpecieName}
+    {leaderboardMap}
+    {chosenSpecie1}
+    {chosenSpecie2}
+  ></Simulator>
 </main>
 
 <style>
-  .blurred-background {
-    position: relative;
-    overflow: hidden;
-    background-image: url("../images/jungle.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(5px);
-    z-index: 0;
-  }
-
-  .content {
-    position: relative;
-    z-index: 10;
-  }
-
-  .landing {
-    height: 100vh;
-    display: flex;
-  }
-
   .foreground_container {
     pointer-events: none;
     padding-left: 85%;
