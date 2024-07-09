@@ -5,10 +5,14 @@
   import * as d3 from "d3";
   import Characters from "./components/CharacterProfile.svelte";
   import data from "../public/data/evolution_average.csv";
+  import { leaderboardStore } from "./stores";
   import RadarChart from "./components/RadarChart.svelte";
   import Simulator from "./components/Simulator.svelte";
   import Dasahboard from "./components/Dashboard.svelte";
   import Dashboard from "./components/Dashboard.svelte";
+
+  let leaderboard;
+  $: leaderboard = $leaderboardStore;
 
   let species = [];
 
@@ -124,7 +128,8 @@
     </div></Scroller
   >
   <Simulator {species} {getCoolSpecieName}></Simulator>
-  <Dashboard></Dashboard>
+
+  <Dashboard {species} {getCoolSpecieName}></Dashboard>
 </main>
 
 <style>

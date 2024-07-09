@@ -29,7 +29,7 @@
     export let ticks = undefined;
   
     /** @type {Number} [tickGutter=0] - The amount of whitespace between the start of the tick and the chart drawing area (the yRange min). */
-    export let tickGutter = 0;
+    export let tickGutter = 4;
   
     /** @type {Number} [dx=0] - Any optional value passed to the `dx` attribute on the text label. */
     export let dx = 0;

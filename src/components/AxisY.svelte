@@ -29,7 +29,7 @@
     export let ticks = 4;
   
     /** @type {Number} [tickGutter=0] - The amount of whitespace between the start of the tick and the chart drawing area (the xRange min). */
-    export let tickGutter = 0;
+    export let tickGutter = 18;
   
     /** @type {Number} [dx=0] - Any optional value passed to the `dx` attribute on the text label. */
     export let dx = 0;
@@ -86,6 +86,7 @@
         <text
           x={x1}
           {y}
+          font-size=16
           dx={dx + (labelPosition === 'even' ? -3 : 0)}
           text-anchor={labelPosition === 'above' ? 'start' : 'end'}
           dy={dy +
