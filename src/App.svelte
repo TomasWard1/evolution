@@ -7,6 +7,8 @@
   import data from "../public/data/evolution_average.csv";
   import RadarChart from "./components/RadarChart.svelte";
   import Simulator from "./components/Simulator.svelte";
+  import Dasahboard from "./components/Dashboard.svelte";
+  import Dashboard from "./components/Dashboard.svelte";
 
   let species = [];
 
@@ -42,15 +44,6 @@
   let threshold = 0.5;
   let bottom = 0.9;
 
-  let leaderboardMap = [
-    { name: "ANAMENSIS", kills: 12 },
-    { name: "RAMIDUS", kills: 9 },
-    { name: "RUDOLFENSIS", kills: 15 },
-  ];
-
-  let chosenSpecie1 = species[0];
-  let chosenSpecie2 = species[1];
-
   let getCoolSpecieName = d3
     .scaleOrdinal()
     .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
@@ -72,19 +65,6 @@
     // Un observer que se ejecuta cuando cambia el valor de index
     selectedSpecie = species[index];
   }
-
-  function startGame(event) {
-    event.preventDefault();
-    const anchor = document.getElementById("game-anchor");
-    window.scrollTo({
-      top: anchor.offsetTop,
-      behavior: "smooth",
-    });
-  }
-
-  let fightLoading = false;
-
-
 
   function exploreCharacters(event) {
     event.preventDefault();
@@ -143,14 +123,8 @@
       {/each}
     </div></Scroller
   >
-  <Simulator
-    {species}
-    {fightLoading}
-    {getCoolSpecieName}
-    {leaderboardMap}
-    {chosenSpecie1}
-    {chosenSpecie2}
-  ></Simulator>
+  <Simulator {species} {getCoolSpecieName}></Simulator>
+  <Dashboard></Dashboard>
 </main>
 
 <style>

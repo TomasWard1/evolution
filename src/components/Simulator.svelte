@@ -1,43 +1,51 @@
 <script>
   import { onMount } from "svelte";
   import Picker from "./PickCharacter.svelte";
-  import * as d3 from "d3";
+  import { chosenSpecie1, chosenSpecie2 } from "../stores";
   export let species;
-  export let fightLoading;
   export let getCoolSpecieName;
-  export let leaderboardMap;
-  export let chosenSpecie1;
-  export let chosenSpecie2;
-  import RadarChart from "./RadarChart.svelte";
-  $: {
-        // Code to react to changes in chosenSpecie1 or chosenSpecie2
-        console.log('Chosen Specie 1 changed:', chosenSpecie1);
-        console.log('Chosen Specie 2 changed:', chosenSpecie2);
-    }
-  function simulateFight(specie1, specie2) {
+  let fightLoading = false;
+  let leaderboardMap = {};
+
+  let s1;
+  let s2;
+
+  onMount(() => {
+    chosenSpecie1.set(species[0]);
+    chosenSpecie2.set(species[1]);
+
+    chosenSpecie1.subscribe((value) => {
+      s1 = value;
+      console.log("chosenspeci1 changed", value);
+    });
+    chosenSpecie2.subscribe((value) => {
+      s2 = value;
+      console.log("chosenspeci2 changed", value);
+    });
+  });
+
+  function simulateFight() {
     fightLoading = true;
 
-    // Calculate the sum of attributes for both species
-    const total1 = specie1.strength + specie1.intelligence + specie1.agility;
-    const total2 = specie2.strength + specie2.intelligence + specie2.agility;
-
-    // Determine the winner
-    let winner = total1 > total2 ? specie1 : specie2;
-
-    console.log(
-        `${getCoolSpecieName(specie1.id)}: ${total1}, ${getCoolSpecieName(specie2.id)}: ${total2}, Winner: ${getCoolSpecieName(winner.id)}`
-    );
-
-    // Add 1 point to the leaderboard for the winner
-    leaderboardMap[winner.name] += 1
-
-    // Sort leaderboard map in descending order of points
-    leaderboardMap = new Map([...leaderboardMap.entries()].sort((a, b) => b[1] - a[1]));
-
     setTimeout(() => {
-        fightLoading = false;
-    }, 1000); // 1000 milliseconds = 1 second
-}
+      fightLoading = false;
+
+      // Calculate the sum of attributes for both species
+      const total1 = s1.strength + s1.intelligence + s1.agility;
+      const total2 = s2.strength + s2.intelligence + s2.agility;
+
+      // Determine the winner
+      let winner = total1 > total2 ? s1 : s2;
+
+      console.log(
+        `${getCoolSpecieName(s1.id)}: ${total1}, ${getCoolSpecieName(s2.id)}: ${total2}, Winner: ${getCoolSpecieName(winner.id)}`
+      );
+
+      // Add 1 point to the leaderboard for the winner
+      leaderboardMap[getCoolSpecieName(winner.id)] =
+        (leaderboardMap[getCoolSpecieName(winner.id)] || 0) + 1;
+    }, 1000);
+  }
 </script>
 
 <div class="landing row" style="">
@@ -46,13 +54,7 @@
       {fightLoading ? "Simulating..." : "Choose your fighters"}
     </h1>
     <div class="row" style="margin-bottom: 40px;">
-      <Picker
-        {species}
-        {getCoolSpecieName}
-        playerNum="1"
-        {fightLoading}
-        chosenSpecie={chosenSpecie1}
-      />
+      <Picker {species} {getCoolSpecieName} playerNum="1" {fightLoading} />
       <div style="width: 50px;"></div>
       <div class="column" style="justify-content: center;">
         {#if fightLoading}
@@ -62,35 +64,106 @@
           ></div>
         {:else}
           <h1 style="text-align: center;">VS</h1>
-          <button on:click={simulateFight(chosenSpecie1, chosenSpecie2)}
-            >FIGHT!</button
-          >
+          <button on:click={simulateFight}>FIGHT!</button>
         {/if}
       </div>
       <div style="width: 50px;"></div>
-      <Picker
-        {species}
-        {getCoolSpecieName}
-        playerNum="2"
-        {fightLoading}
-        chosenSpecie={chosenSpecie2}
-      />
+      <Picker {species} {getCoolSpecieName} playerNum="2" {fightLoading} />
     </div>
   </div>
   <div class="leaderboard-bg">
     <h2 class="leaderboard-header">KillBoard</h2>
-    <ul class="leaderboard-list">
-      {#each leaderboardMap as { name, kills }}
-        <li class="leaderboard-item">
-          <p style="font-weight: 600;">{name}</p>
-          <p>{kills} kills</p>
-        </li>
-      {/each}
-    </ul>
+    {#if Object.keys(leaderboardMap).length === 0}
+      <p style="font-size: 14px; color:gray; text-align: center;">
+        No data. Start a fight!
+      </p>
+    {:else}
+      <ul class="leaderboard-list">
+        {#each Object.entries(leaderboardMap).sort((a, b) => b[1] - a[1]) as [key, value]}
+          <li class="leaderboard-item">
+            <p style="font-weight: 600;">{key}</p>
+            <p>{value} {value > 1 ? "kills" : "kill"}</p>
+          </li>
+        {/each}
+      </ul>
+    {/if}
   </div>
 </div>
+<div id="snackbar">Some text some message..</div>
 
 <style>
+  #snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+  }
+
+  /* Show the snackbar when clicking on a button (class added with JavaScript) */
+  #snackbar.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+    -webkit-animation:
+      fadein 0.5s,
+      fadeout 0.5s 2.5s;
+    animation:
+      fadein 0.5s,
+      fadeout 0.5s 2.5s;
+  }
+
+  /* Animations to fade the snackbar in and out */
+  @-webkit-keyframes fadein {
+    from {
+      bottom: 0;
+      opacity: 0;
+    }
+    to {
+      bottom: 30px;
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadein {
+    from {
+      bottom: 0;
+      opacity: 0;
+    }
+    to {
+      bottom: 30px;
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes fadeout {
+    from {
+      bottom: 30px;
+      opacity: 1;
+    }
+    to {
+      bottom: 0;
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeout {
+    from {
+      bottom: 30px;
+      opacity: 1;
+    }
+    to {
+      bottom: 0;
+      opacity: 0;
+    }
+  }
   .leaderboard-bg {
     width: 20vw;
     background-color: rgba(128, 128, 128, 0.178);

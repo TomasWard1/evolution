@@ -3,7 +3,26 @@
   export let getCoolSpecieName;
   export let playerNum;
   export let fightLoading;
-  export let chosenSpecie;
+  import { chosenSpecie1, chosenSpecie2 } from "../stores";
+  let chosenSpecie = playerNum == 1 ? chosenSpecie1 : chosenSpecie2;
+
+  if (playerNum == 1) {
+    chosenSpecie1.subscribe((value) => {
+      chosenSpecie = value;
+    });
+  } else {
+    chosenSpecie2.subscribe((value) => {
+      chosenSpecie = value;
+    });
+  }
+
+  function handleSpecieChange() {
+    if (playerNum == 1) {
+      chosenSpecie1.set(chosenSpecie);
+    } else {
+      chosenSpecie2.set(chosenSpecie);
+    }
+  }
 </script>
 
 {#if chosenSpecie != undefined}
@@ -16,15 +35,18 @@
     />
     <h2 style="text-align: center;   font-size: 50px;">Specie {playerNum}</h2>
     {#if !fightLoading}
-    <div class="picker-container">
-      <select class="picker" bind:value={chosenSpecie}>
-        {#each species as sp}
-          <option value={sp}>{getCoolSpecieName(sp.id)}</option>
-        {/each}
-      </select>
-    </div>
+      <div class="picker-container">
+        <select
+          class="picker"
+          bind:value={chosenSpecie}
+          on:change={handleSpecieChange}
+        >
+          {#each species as sp}
+            <option value={sp}>{getCoolSpecieName(sp.id)}</option>
+          {/each}
+        </select>
+      </div>
     {/if}
-
   </div>
 {/if}
 
@@ -59,7 +81,6 @@
   .picker-container {
     position: relative;
     display: inline-block;
- 
   }
 
   .picker-container::after {

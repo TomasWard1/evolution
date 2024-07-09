@@ -6,7 +6,6 @@
   import AxisRadial from "./AxisRadial.svelte";
 
   export let data;
-  console.log(data);
 
   const seriesKey = "name";
   const xKey = ["World Knowledge",'Height','Cranial Capacity'];
