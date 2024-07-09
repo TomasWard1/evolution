@@ -83,13 +83,8 @@
   }
 
   let fightLoading = false;
-  
-  function simulateFight(event) {
-    fightLoading = true;
-    setTimeout(() => {
-      fightLoading = false;
-    }, 1000); // 3000 milliseconds = 3 seconds
-  }
+
+
 
   function exploreCharacters(event) {
     event.preventDefault();
@@ -151,7 +146,6 @@
   <Simulator
     {species}
     {fightLoading}
-    {simulateFight}
     {getCoolSpecieName}
     {leaderboardMap}
     {chosenSpecie1}

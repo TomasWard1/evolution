@@ -3,7 +3,7 @@
   export let getCoolSpecieName;
   export let playerNum;
   export let fightLoading;
-export let chosenSpecie;
+  export let chosenSpecie;
 </script>
 
 {#if chosenSpecie != undefined}

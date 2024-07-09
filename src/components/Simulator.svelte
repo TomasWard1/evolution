@@ -5,11 +5,39 @@
   export let species;
   export let fightLoading;
   export let getCoolSpecieName;
-  export let simulateFight;
   export let leaderboardMap;
   export let chosenSpecie1;
   export let chosenSpecie2;
   import RadarChart from "./RadarChart.svelte";
+  $: {
+        // Code to react to changes in chosenSpecie1 or chosenSpecie2
+        console.log('Chosen Specie 1 changed:', chosenSpecie1);
+        console.log('Chosen Specie 2 changed:', chosenSpecie2);
+    }
+  function simulateFight(specie1, specie2) {
+    fightLoading = true;
+
+    // Calculate the sum of attributes for both species
+    const total1 = specie1.strength + specie1.intelligence + specie1.agility;
+    const total2 = specie2.strength + specie2.intelligence + specie2.agility;
+
+    // Determine the winner
+    let winner = total1 > total2 ? specie1 : specie2;
+
+    console.log(
+        `${getCoolSpecieName(specie1.id)}: ${total1}, ${getCoolSpecieName(specie2.id)}: ${total2}, Winner: ${getCoolSpecieName(winner.id)}`
+    );
+
+    // Add 1 point to the leaderboard for the winner
+    leaderboardMap[winner.name] += 1
+
+    // Sort leaderboard map in descending order of points
+    leaderboardMap = new Map([...leaderboardMap.entries()].sort((a, b) => b[1] - a[1]));
+
+    setTimeout(() => {
+        fightLoading = false;
+    }, 1000); // 1000 milliseconds = 1 second
+}
 </script>
 
 <div class="landing row" style="">
@@ -18,7 +46,13 @@
       {fightLoading ? "Simulating..." : "Choose your fighters"}
     </h1>
     <div class="row" style="margin-bottom: 40px;">
-      <Picker {species} {getCoolSpecieName} playerNum="1" {fightLoading}   chosenSpecie={chosenSpecie1}/>
+      <Picker
+        {species}
+        {getCoolSpecieName}
+        playerNum="1"
+        {fightLoading}
+        chosenSpecie={chosenSpecie1}
+      />
       <div style="width: 50px;"></div>
       <div class="column" style="justify-content: center;">
         {#if fightLoading}
@@ -28,11 +62,19 @@
           ></div>
         {:else}
           <h1 style="text-align: center;">VS</h1>
-          <button on:click={simulateFight}>FIGHT!</button>
+          <button on:click={simulateFight(chosenSpecie1, chosenSpecie2)}
+            >FIGHT!</button
+          >
         {/if}
       </div>
       <div style="width: 50px;"></div>
-      <Picker {species} {getCoolSpecieName} playerNum="2" {fightLoading}  chosenSpecie={chosenSpecie2}/>
+      <Picker
+        {species}
+        {getCoolSpecieName}
+        playerNum="2"
+        {fightLoading}
+        chosenSpecie={chosenSpecie2}
+      />
     </div>
   </div>
   <div class="leaderboard-bg">

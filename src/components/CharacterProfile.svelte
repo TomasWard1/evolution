@@ -13,42 +13,6 @@
     .range([1, 10]);
   let heightScale = d3.scaleLinear().domain([110, 170]).range([1, 10]);
 
-  function calculateStrength(height, cranialCapacity, hipStructure) {
-    const normalizedHeight = height / 170;
-    const normalizedCranialCapacity = cranialCapacity / 1236;
-    const normalizedHipStructure = hipStructure === "big" ? 1 : 0;
-
-    const strengthScore =
-      normalizedHeight * 0.4 +
-      normalizedCranialCapacity * 0.4 +
-      normalizedHipStructure * 0.2;
-
-    return Math.round(strengthScore * 100);
-  }
-
-  function calculateAgility(height, incisorSize, canineSize) {
-    const normalizedHeight = height / 170;
-    const normalizedIncisorSize = incisorSize === "small" ? 1 : 0;
-    const normalizedCanineSize = canineSize === "small" ? 1 : 0;
-
-    const agilityScore =
-      normalizedHeight * 0.4 +
-      normalizedIncisorSize * 0.3 +
-      normalizedCanineSize * 0.3;
-
-    return Math.round(agilityScore * 100);
-  }
-
-  function calculateIntelligence(cranialCapacity, technoType) {
-    const normalizedCranialCapacity = cranialCapacity / 1236;
-    const normalizedTechnoType = technoType === "modern" ? 1 : 0;
-
-    const intelligenceScore =
-      normalizedCranialCapacity * 0.7 + normalizedTechnoType * 0.3;
-
-    return Math.round(intelligenceScore * 100);
-  }
-
   function applyTransition() {
     d3.selectAll(".progress-value")
       .transition()
@@ -78,59 +42,37 @@
         <div class="row" style="padding: 0%; justify-content:start; align-items:center;">
           <p>Strength</p>
           <strong
-            >{calculateStrength(
-              specie.height,
-              specie.cranialCapacity,
-              specie.hip
-            )}</strong
+            >{specie.strength}</strong
           >
         </div>
         <div class="progress">
           <div
             class="progress-value"
-            data-width={calculateStrength(
-              specie.height,
-              specie.cranialCapacity,
-              specie.hip
-            )}
+            data-width={specie.strength}
           ></div>
         </div>
         <div class="row" style="padding: 0%; justify-content:start;align-items:center;">
           <p>Intelligence</p>
           <strong
-            >{calculateIntelligence(
-              specie.cranialCapacity,
-              specie.tecnoType
-            )}</strong
+            >{specie.intelligence}</strong
           >
         </div>
         <div class="progress">
           <div
             class="progress-value"
-            data-width={calculateIntelligence(
-              specie.cranialCapacity,
-              specie.tecnoType
-            )}
+            data-width={specie.intelligence}
           ></div>
         </div>
         <div class="row" style="padding: 0%; justify-content:start;align-items:center;">
           <p>Agility</p>
           <strong
-            >{calculateAgility(
-              specie.height,
-              specie.incisorSize,
-              specie.canineSize
-            )}</strong
+            >{specie.agility}</strong
           >
         </div>
         <div class="progress">
           <div
             class="progress-value"
-            data-width={calculateAgility(
-              specie.height,
-              specie.incisorSize,
-              specie.canineSize
-            )}
+            data-width={specie.agility}
           ></div>
         </div>
         <!-- <div class="center" style="margin-top: 13%;">
