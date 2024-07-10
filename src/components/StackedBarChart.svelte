@@ -104,7 +104,7 @@
     */
   .chart-container {
     width: 95%;
-    height: 200px;
+    height: 120px;
     padding-left: 60px;
     margin-top: 40px;
   }
