@@ -5,8 +5,21 @@
   import * as d3 from "d3";
   import Characters from "./components/CharacterProfile.svelte";
   import data from "../public/data/evolution_average.csv";
+  import { leaderboardStore, armySpecieStore } from "./stores";
   import RadarChart from "./components/RadarChart.svelte";
-  import Picker from "./components/PickCharacter.svelte";
+  import Simulator from "./components/Simulator.svelte";
+  import Dasahboard from "./components/Dashboard.svelte";
+  import Dashboard from "./components/Dashboard.svelte";
+  import Congrats from "./components/Congrats.svelte";
+  import Footer from "./components/Footer.svelte";
+
+  let leaderboard;
+  $: leaderboard = $leaderboardStore;
+  $: armySpecie = $armySpecieStore;
+
+  $: if (armySpecie) {
+    console.log(armySpecie);
+  }
 
   let species = [];
 
@@ -56,29 +69,12 @@
       "ERGASTER",
       "ERECTUS",
       "SAPIENS",
-      "NEANDERTHALENSIS",
+      "NEANDERTHAL",
     ]);
 
   $: {
     // Un observer que se ejecuta cuando cambia el valor de index
     selectedSpecie = species[index];
-  }
-
-  function startGame(event) {
-    event.preventDefault();
-    const anchor = document.getElementById("game-anchor");
-    window.scrollTo({
-      top: anchor.offsetTop,
-      behavior: "smooth",
-    });
-  }
-
-  let fightLoading = false;
-  function simulateFight(event) {
-    fightLoading = true;
-    setTimeout(() => {
-      fightLoading = false;
-    }, 3000); // 3000 milliseconds = 3 seconds
   }
 
   function exploreCharacters(event) {
@@ -92,7 +88,8 @@
 </script>
 
 <main>
-  <div class="landing column" style="z-index: 4;">
+  <div style="scroll-snap-type: y mandatory;">
+      <div class="landing column">
     <img
       src="images/evolution.gif"
       alt="Evolution Gif"
@@ -138,52 +135,16 @@
       {/each}
     </div></Scroller
   >
+  <Simulator {species} {getCoolSpecieName}></Simulator>
 
-  <div id="game-anchor"></div>
-  <div class="landing column" style="justify-content: center;">
-    <h1 style="text-align: center; width:100vw; margin-bottom: 30px;">
-      {fightLoading ? "Simulating..." : "Choose your fighters"}
-    </h1>
-    <div class="row" style="margin-bottom: 40px;">
-      <Picker {species} {getCoolSpecieName} playerNum="1" {fightLoading} />
-      <div style="width: 50px;"></div>
-      {#if fightLoading}
-        <div class="loader" style="display: block; margin-bottom:30px"></div>
-      {:else}
-        <div class="column">
-          <h1 style="text-align: center;">VS</h1>
-          <button on:click={simulateFight}>FIGHT!</button>
-        </div>
-      {/if}
-      <div style="width: 50px;"></div>
+  <Dashboard {species} {getCoolSpecieName}></Dashboard>
 
-      <Picker {species} {getCoolSpecieName} playerNum="2" {fightLoading} />
-    </div>
+  <Footer> </Footer>
   </div>
+
 </main>
 
 <style>
-  .blurred-background {
-    position: relative;
-    overflow: hidden;
-    background-image: url("../images/jungle.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(5px);
-    z-index: 0;
-  }
-
-  .content {
-    position: relative;
-    z-index: 10;
-  }
-
-  .landing {
-    height: 100vh;
-    display: flex;
-  }
-
   .foreground_container {
     pointer-events: none;
     padding-left: 85%;

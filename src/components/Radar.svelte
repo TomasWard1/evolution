@@ -9,25 +9,25 @@
     const { data, width, height, xGet, config } = getContext('LayerCake');
   
     /**  @type {String} [fill='#f0c'] The radar's fill color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
-    export let fill = '#f0c'
+    export let fill = '#ffffff'
   
     /**  @type {String} [stroke='#f0c'] The radar's stroke color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
-    export let stroke = '#f0c'
+    export let stroke = '#ffffff'
   
     /**  @type {Number} [stroke=2] The radar's stroke color. */
-    export let strokeWidth = 2
+    export let strokeWidth = 1
   
     /**  @type {Number} [fillOpacity=0.5] The radar's fill opacity. */
-    export let fillOpacity = 0.5
+    export let fillOpacity = .75
   
     /**  @type {Number} [r=4.5] Each circle's radius. */
     export let r = 4.5;
   
     /**  @type {String} [circleFill="#f0c"] Each circle's fill color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
-    export let circleFill = "#f0c";
+    export let circleFill = "#ffffff";
   
     /**  @type {String} [circleStroke="#fff"] Each circle's stroke color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
-    export let circleStroke = "#fff";
+    export let circleStroke = "#000000";
   
     /**  @type {Number} [circleStrokeWidth=1] Each circle's stroke width. */
     export let circleStrokeWidth = 1;
@@ -50,12 +50,18 @@
     //     });
     //   })
     //   .join('L') + 'z';
+
+    const colors = [
+    'rgba(255, 255, 255, 1)',
+    'rgba(100, 100, 100, 1)',
+  ];
+
   </script>
   
   <g
     transform="translate({ $width / 2 }, { $height / 2 })"
   >
-    {#each $data as row}
+    {#each $data as row,ind}
       {@const xVals = $xGet(row)}
       <!-- Draw a line connecting all the dots -->
       <path
@@ -63,22 +69,22 @@
         d='{path(xVals)}'
         stroke="{stroke}"
         stroke-width="{strokeWidth}"
-        fill="{fill}"
+        fill={colors[ind]}
         fill-opacity="{fillOpacity}"
       ></path>
   
-      <!-- Plot each dots -->
+      <!-- Plot each dots
       {#each xVals as circleR, i}
         {@const thisAngleSlice = angleSlice * i - Math.PI / 2}
         <circle
           cx={circleR * Math.cos(thisAngleSlice)}
           cy={circleR * Math.sin(thisAngleSlice)}
           r="{r}"
-          fill="{circleFill}"
+          fill={colors[-ind + 1]}
           stroke="{circleStroke}"
           stroke-width="{circleStrokeWidth}"
         ></circle>
-      {/each}
+      {/each} -->
     {/each}
   </g>
   

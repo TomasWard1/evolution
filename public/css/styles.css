@@ -27,7 +27,20 @@ body {
 
 }
 
+.landing {
+
+  height: 100vh;
+  display: flex;
+}
+
 p {
+  font-family: "Open Sans";
+  font-size: 18px;
+  color: white;
+  display: block;
+}
+
+a {
   font-family: "Open Sans";
   font-size: 18px;
   color: white;
@@ -85,11 +98,9 @@ h3 {
 .row {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-around; /* Distribute items evenly */
-  gap: 10px; /* Space between items */
-  padding: 10px; /* Optional: padding for the row */
-  border-radius: 8px; /* Optional: rounded corners */
+  justify-content: space-around;
+  gap: 10px; 
+  padding: 10px; 
 }
 
 .float {
@@ -101,34 +112,7 @@ h3 {
   padding: 2em;
 }
 
-/* HTML: <div class="loader"></div> */
-.loader {
-  width: 50px;
-  aspect-ratio: 1;
-  animation: l13-0 2s linear infinite;
-}
-.loader::before,
-.loader::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(at 30% 30%, #0000, #000a) white;
-  animation: l13-1 0.5s cubic-bezier(0.5, -500, 0.5, 500) infinite;
-}
-.loader::after {
-  animation-delay: -0.15s;
-}
-@keyframes l13-0 {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-@keyframes l13-1 {
-  100% {
-    transform: translate(0.5px);
-  }
-}
+
 
 button {
   border-radius: 8px;
