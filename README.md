@@ -1,59 +1,87 @@
-# VD | Svelte Scroller Template 
+# Proyecto de Visualización de Datos para Universidad Torcuato Di Tella
 
-### Maqueta de proyecto que implementa svelte-scroller para filtrar datos y mostrar visualizaciones de datos en una página web con efecto de scrollytelling.
----
+Este proyecto de visualización de datos utiliza Svelte Kit junto con D3 para escalado y LayerCake para generar gráficos interactivos.
 
-### Referencias: 
-- [https://github.com/sveltejs/svelte-scroller](https://github.com/sveltejs/svelte-scroller)
-- [Escalas de d3.js](https://d3js.org/d3-scale)
-[API de Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
+## Tecnologías Utilizadas
 
-![thumbnail](thumbnail.png)
+- **Svelte Kit**: Framework de desarrollo web para construir aplicaciones web rápidas y eficientes.
+  - Documentación de Svelte Kit: [Svelte Kit Docs](https://kit.svelte.dev/docs)
 
----
+- **D3**: Biblioteca JavaScript para manipular documentos basados en datos.
+  - Utilizado para escalar datos y crear visualizaciones dinámicas.
+  - Documentación de D3: [D3 Documentation](https://d3js.org/)
 
-This template should help get you started developing with Svelte in Vite.
+- **LayerCake**: Componente para Svelte que facilita la creación de gráficos complejos y escalables.
+  - Documentación de LayerCake: [LayerCake GitHub Repository](https://github.com/davidcsally/layercake)
 
-## Recommended IDE Setup
+## Documentación
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+### Funciones Principales
 
-## Need an official Svelte framework?
+- **`exploreCharacters(event)`**:
+  Función que maneja el evento de clic en un enlace para desplazarse suavemente hacia una sección específica de la página.
+  
+  ```javascript
+  function exploreCharacters(event) {
+    event.preventDefault();
+    const anchor = document.getElementById("start-anchor");
+    window.scrollTo({
+      top: anchor.offsetTop,
+      behavior: "smooth",
+    });
+  }
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+- **`Reactividad para leaderboard:`**:
+Utiliza Svelte's reactivity to keep the leaderboard updated and sorted dynamically.
 
-## Technical considerations
+```javascript
+Copy code
+$: if (leaderboard) {
+    let items = Object.keys(leaderboard).map(function (key) {
+      return [key, leaderboard[key]];
+    });
 
-**Why use this over SvelteKit?**
+    items.sort(function (first, second) {
+      return second[1] - first[1];
+    });
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `checkJs` in the JS template?**
-
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/sveltejs/svelte-hmr/tree/master/packages/svelte-hmr#preservation-of-local-state).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from "svelte/store"
-export default writable(0)
+    sortedLeaderboard = items.slice(0, 2);
+  }
 ```
+- **`simulate100Fights():`**:
+Función que simula 100 peleas entre especies de manera aleatoria y actualiza el leaderboard con los resultados.
+
+```javascript
+Copy code
+function simulate100Fights() {
+  for (let i = 0; i < 100; i++) {
+    let randomIndex1 = Math.floor(Math.random() * 11);
+    let randomIndex2 = Math.floor(Math.random() * 11);
+
+    let sp1 = species[randomIndex1];
+    let sp2 = species[randomIndex2];
+
+    fightLoading = true;
+
+    setTimeout(() => {
+      fightLoading = false;
+
+      const total1 = sp1.strength + sp1.intelligence + sp1.agility;
+      const total2 = sp2.strength + sp2.intelligence + sp2.agility;
+
+      let winner = total1 > total2 ? sp1 : sp2;
+
+      leaderboardStore.update((map) => {
+        map[winner.id] = (map[winner.id] || 0) + 1;
+        return map;
+      });
+    }, 1000);
+  }
+}
+```
+
+### Personalización de LayerCake 
+Todos los gráficos en este proyecto han sido creados utilizando LayerCake, un componente Svelte modificado para ajustarse a los requisitos específicos del proyecto.
+
+### Autor
+Este proyecto fue desarrollado por Tomas Ward.
