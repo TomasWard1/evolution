@@ -13,6 +13,8 @@ Este proyecto de visualización de datos utiliza Svelte Kit junto con D3 para es
 
 - **LayerCake**: Componente para Svelte que facilita la creación de gráficos complejos y escalables.
   - Documentación de LayerCake: [LayerCake GitHub Repository](https://github.com/davidcsally/layercake)
+    
+-  **Scroller de Svelte**: Componente utilizado para scrollytelling, template provisto por la facultad.
 
 ## Documentación
 
@@ -32,7 +34,7 @@ Este proyecto de visualización de datos utiliza Svelte Kit junto con D3 para es
   }
 
 - **`Reactividad para leaderboard:`**:
-Utiliza Svelte's reactivity to keep the leaderboard updated and sorted dynamically.
+Funcion que utiliza la reactividad de Svelte para mantener el leaderboard updateado.
 
 ```javascript
 Copy code
