@@ -12,7 +12,6 @@
   let leaderboard;
   $: leaderboard = $leaderboardStore;
 
-
   onMount(() => {
     chosenSpecie1.set(species[0]);
     chosenSpecie2.set(species[1]);
@@ -24,6 +23,35 @@
       s2 = value;
     });
   });
+
+  function simulate100Fights() {
+    for (let i = 0; i < 100; i++) {
+      let randomIndex1 = Math.floor(Math.random() * 11);
+      let randomIndex2 = Math.floor(Math.random() * 11);
+
+      let sp1 = species[randomIndex1];
+      let sp2 = species[randomIndex2];
+
+      fightLoading = true;
+
+      setTimeout(() => {
+        fightLoading = false;
+
+        // Calculate the sum of attributes for both species
+        const total1 = sp1.strength + sp1.intelligence + sp1.agility;
+        const total2 = sp2.strength + sp2.intelligence + sp2.agility;
+
+        // Determine the winner
+        let winner = total1 > total2 ? sp1 : sp2;
+
+        // Add 1 point to the leaderboard for the winner
+        leaderboardStore.update((map) => {
+          map[winner.id] = (map[winner.id] || 0) + 1;
+          return map;
+        });
+      }, 1000);
+    }
+  }
 
   function simulateFight() {
     fightLoading = true;
@@ -39,10 +67,10 @@
       let winner = total1 > total2 ? s1 : s2;
 
       // Add 1 point to the leaderboard for the winner
-      leaderboardStore.update(map => {
+      leaderboardStore.update((map) => {
         map[winner.id] = (map[winner.id] || 0) + 1;
         return map;
-    });
+      });
     }, 1000);
   }
 </script>
@@ -64,6 +92,7 @@
         {:else}
           <h1 style="text-align: center;">VS</h1>
           <button on:click={simulateFight}>FIGHT!</button>
+          <button on:click={simulate100Fights}>Simulate 100 Fights</button>
         {/if}
       </div>
       <div style="width: 50px;"></div>
@@ -122,4 +151,32 @@
     padding-inline: 20px;
     justify-content: space-between;
   }
+
+  .loader {
+  width: 50px;
+  aspect-ratio: 1;
+  animation: l13-0 2s linear infinite;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(at 30% 30%, #0000, #000a) white;
+  animation: l13-1 0.5s cubic-bezier(0.5, -500, 0.5, 500) infinite;
+}
+.loader::after {
+  animation-delay: -0.15s;
+}
+@keyframes l13-0 {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes l13-1 {
+  100% {
+    transform: translate(0.5px);
+  }
+}
 </style>

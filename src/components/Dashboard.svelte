@@ -1,6 +1,6 @@
 <script>
   import StackedBarChart from "./StackedBarChart.svelte";
-  import { leaderboardStore } from "../stores";
+  import { chosenSpecie1, leaderboardStore } from "../stores";
   import RadarChart from "./RadarChart.svelte";
   import * as d3 from "d3";
   export let species;
@@ -74,38 +74,74 @@
   </div>
 
   {#if Object.keys(leaderboard).length > 1}
-    <div class="row" style="height: 200px; width: 100%; justify-content: start;">
-      <div style="width: 50%;">
-        <StackedBarChart
+    <div
+      class="row"
+      style="height: 200px; width: 100%; justify-content: start;"
+    >
+      <StackedBarChart
         {species}
         top1SpecieId={sortedLeaderboard[0][0]}
         top2SpecieId={sortedLeaderboard[1][0]}
       ></StackedBarChart>
-      </div>
-    
-      <div style="width: 50%; height: 200px; margin-top: 30px; margin-left: 80px;">
+      <div
+        style="width: 50%; height: 200px; margin-top: 30px; margin-left: 80px;"
+      >
         <RadarChart
-        data={[
-          {
-            name: getCoolSpecieName(species[sortedLeaderboard[0][0]].id),
-            Height: heightScale(species[sortedLeaderboard[0][0]].height),
-            "Cranial Capacity": cranialCapacityScale(
-              species[sortedLeaderboard[0][0]].cranialCapacity
-            ),
-            "World Knowledge": timeScale(species[sortedLeaderboard[0][0]].time),
-          },
-          {
-            name: getCoolSpecieName(species[sortedLeaderboard[1][0]].id),
-            Height: heightScale(species[sortedLeaderboard[1][0]].height),
-            "Cranial Capacity": cranialCapacityScale(
-              species[sortedLeaderboard[1][0]].cranialCapacity
-            ),
-            "World Knowledge": timeScale(species[sortedLeaderboard[1][0]].time),
-          },
-        ]}
-      ></RadarChart>
+          data={[
+            {
+              name: getCoolSpecieName(species[sortedLeaderboard[0][0]].id),
+              Height: heightScale(species[sortedLeaderboard[0][0]].height),
+              "Cranial Capacity": cranialCapacityScale(
+                species[sortedLeaderboard[0][0]].cranialCapacity
+              ),
+              "World Knowledge": timeScale(
+                species[sortedLeaderboard[0][0]].time
+              ),
+            },
+            {
+              name: getCoolSpecieName(species[sortedLeaderboard[1][0]].id),
+              Height: heightScale(species[sortedLeaderboard[1][0]].height),
+              "Cranial Capacity": cranialCapacityScale(
+                species[sortedLeaderboard[1][0]].cranialCapacity
+              ),
+              "World Knowledge": timeScale(
+                species[sortedLeaderboard[1][0]].time
+              ),
+            },
+          ]}
+        ></RadarChart>
       </div>
-     
+    </div>
+
+    <div
+      class="row"
+      style="align-items: center; justify-content: center; width: 90vw; margin-top: 80px;"
+    >
+      <div class="column">
+        <img
+          src="images/{species[sortedLeaderboard[0][0]].id}.png"
+          alt="avatar"
+          class="float"
+        />
+        <button
+          >Make Army out of {getCoolSpecieName(
+            species[sortedLeaderboard[0][0]].id
+          )}</button
+        >
+      </div>
+
+      <div class="column">
+        <img
+          src="images/{species[sortedLeaderboard[1][0]].id}.png"
+          alt="avatar"
+          class="float"
+        />
+        <button
+          >Make Army out of {getCoolSpecieName(
+            species[sortedLeaderboard[1][0]].id
+          )}</button
+        >
+      </div>
     </div>
   {:else}
     <div class="img-container">
@@ -132,5 +168,15 @@
     width: 20px;
     height: 20px;
     border-radius: 100px;
+  }
+
+  img {
+    width: auto;
+    height: 30vh;
+  }
+
+  button {
+    font-weight: bold;
+    background-color: rgba(217, 50, 50, 0.772);
   }
 </style>

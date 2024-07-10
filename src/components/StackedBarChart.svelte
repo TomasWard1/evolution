@@ -103,7 +103,7 @@
       expand to fill it.
     */
   .chart-container {
-    width: 100%;
+    width: 95%;
     height: 200px;
     padding-left: 60px;
     margin-top: 40px;

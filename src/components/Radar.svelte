@@ -18,7 +18,7 @@
     export let strokeWidth = 1
   
     /**  @type {Number} [fillOpacity=0.5] The radar's fill opacity. */
-    export let fillOpacity = 1
+    export let fillOpacity = .75
   
     /**  @type {Number} [r=4.5] Each circle's radius. */
     export let r = 4.5;
