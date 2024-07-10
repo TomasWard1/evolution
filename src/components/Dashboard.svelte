@@ -48,7 +48,7 @@
 {:else}
 <div
   class="column"
-  style="align-items: start; margin-top: 0px; margin-inline: 70px; gap: 0px;min-height: 100vh;"
+  style="align-items: start; margin-top: 0px; margin-inline: 70px; gap: 0px;min-height: 110vh;"
 >
   <h1 style="margin-block-end: -25px; margin-block-start: 30px;">
     Stats - Top 2 Species
@@ -89,11 +89,11 @@
 ></StackedBarChart>
     <div
       class="row"
-      style="height: 200px; width: 100%; justify-content: start;  margin-top: 80px;"
+      style="height: 200px; width: 100%; justify-content: space-between;  margin-top: 2%;"
     >
      
       <div
-        style="width: 100%; height: 350px; margin-left: 80px;"
+        style="width: 70%; height: 250px; margin-left: 80px;"
       >
         <RadarChart
           data={[
