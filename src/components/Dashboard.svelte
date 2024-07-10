@@ -1,11 +1,13 @@
 <script>
   import StackedBarChart from "./StackedBarChart.svelte";
-  import { chosenSpecie1, leaderboardStore } from "../stores";
+  import { leaderboardStore, armySpecieStore, chosenSpecie1 } from "../stores";
   import RadarChart from "./RadarChart.svelte";
+  import Congrats from "./Congrats.svelte";
   import * as d3 from "d3";
   export let species;
   export let getCoolSpecieName;
-
+  $: armySpecie = $armySpecieStore;
+  let showCongrats = false;
   let timeScale = d3.scaleLinear().domain([0.5, 4.4]).range([1, 10]);
   let cranialCapacityScale = d3
     .scaleLinear()
@@ -30,14 +32,20 @@
     });
 
     sortedLeaderboard = items.slice(0, 2);
+  }
 
-    if (sortedLeaderboard.length > 1) {
-      console.log(species[sortedLeaderboard[0][0]]);
-      console.log(species[sortedLeaderboard[1][0]]);
+  function setArmySpecie(isSpecie1) {
+    if (isSpecie1) {
+      armySpecieStore.set(species[sortedLeaderboard[0][0]]);
+    } else {
+      armySpecieStore.set(species[sortedLeaderboard[1][0]]);
     }
   }
 </script>
 
+{#if (armySpecie != null)}
+<Congrats></Congrats>
+{:else}
 <div
   class="column"
   style="align-items: start; margin-top: 0px; margin-inline: 70px; gap: 0px;min-height: 100vh;"
@@ -74,17 +82,18 @@
   </div>
 
   {#if Object.keys(leaderboard).length > 1}
+  <StackedBarChart
+  {species}
+  top1SpecieId={sortedLeaderboard[0][0]}
+  top2SpecieId={sortedLeaderboard[1][0]}
+></StackedBarChart>
     <div
       class="row"
-      style="height: 200px; width: 100%; justify-content: start;"
+      style="height: 200px; width: 100%; justify-content: start;  margin-top: 80px;"
     >
-      <StackedBarChart
-        {species}
-        top1SpecieId={sortedLeaderboard[0][0]}
-        top2SpecieId={sortedLeaderboard[1][0]}
-      ></StackedBarChart>
+     
       <div
-        style="width: 50%; height: 200px; margin-top: 30px; margin-left: 80px;"
+        style="width: 100%; height: 350px; margin-left: 80px;"
       >
         <RadarChart
           data={[
@@ -111,9 +120,7 @@
           ]}
         ></RadarChart>
       </div>
-    </div>
-
-    <div
+      <div
       class="row"
       style="align-items: center; justify-content: center; width: 90vw; margin-top: 80px;"
     >
@@ -123,7 +130,7 @@
           alt="avatar"
           class="float"
         />
-        <button
+        <button on:click={() => setArmySpecie(true)}
           >Make Army out of {getCoolSpecieName(
             species[sortedLeaderboard[0][0]].id
           )}</button
@@ -136,13 +143,16 @@
           alt="avatar"
           class="float"
         />
-        <button
+        <button on:click={() => setArmySpecie(false)}
           >Make Army out of {getCoolSpecieName(
             species[sortedLeaderboard[1][0]].id
           )}</button
         >
       </div>
     </div>
+    </div>
+
+   
   {:else}
     <div class="img-container">
       <img
@@ -154,6 +164,7 @@
   {/if}
 </div>
 
+{/if}
 <style>
   .img-container {
     display: flex;

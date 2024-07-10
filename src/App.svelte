@@ -5,14 +5,21 @@
   import * as d3 from "d3";
   import Characters from "./components/CharacterProfile.svelte";
   import data from "../public/data/evolution_average.csv";
-  import { leaderboardStore } from "./stores";
+  import { leaderboardStore, armySpecieStore } from "./stores";
   import RadarChart from "./components/RadarChart.svelte";
   import Simulator from "./components/Simulator.svelte";
   import Dasahboard from "./components/Dashboard.svelte";
   import Dashboard from "./components/Dashboard.svelte";
+  import Congrats from "./components/Congrats.svelte";
+  import Footer from "./components/Footer.svelte";
 
   let leaderboard;
   $: leaderboard = $leaderboardStore;
+  $: armySpecie = $armySpecieStore;
+
+  $: if (armySpecie) {
+    console.log(armySpecie);
+  }
 
   let species = [];
 
@@ -81,7 +88,8 @@
 </script>
 
 <main>
-  <div class="landing column">
+  <div style="scroll-snap-type: y mandatory;">
+      <div class="landing column">
     <img
       src="images/evolution.gif"
       alt="Evolution Gif"
@@ -130,6 +138,10 @@
   <Simulator {species} {getCoolSpecieName}></Simulator>
 
   <Dashboard {species} {getCoolSpecieName}></Dashboard>
+
+  <Footer> </Footer>
+  </div>
+
 </main>
 
 <style>
